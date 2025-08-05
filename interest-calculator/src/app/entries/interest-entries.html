@@ -1,0 +1,28 @@
+<h3>History</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Interest Rate (%)</th>
+      <th>Time (years)</th>
+      <th>Simple Interest</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @if (allEntries.length === 0) {
+    <tr>
+      <td colspan="5">No entries</td>
+    </tr>
+    }@else{ @for (entry of allEntries; track entry.id) {
+    <tr>
+      <td>{{ entry.amount | currency : "INR" }}</td>
+      <td>{{ entry.rate }}</td>
+      <td>{{ entry.time }}</td>
+      <td>{{ entry.interest | currency : "INR" }}</td>
+      <td><button (click)="onDelete(entry.id)">Delete</button></td>
+    </tr>
+    } }
+  </tbody>
+</table>

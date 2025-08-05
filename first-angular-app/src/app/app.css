@@ -1,0 +1,139 @@
+/* Main app layout */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  min-height: calc(100vh - 120px);
+}
+
+/* Users list styling */
+main > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: fit-content;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+main > ul::before {
+  content: "Team Members";
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+  display: block;
+}
+
+main > ul > li {
+  animation: slideIn 0.3s ease-out;
+  animation-fill-mode: both;
+}
+
+main > ul > li:nth-child(1) { animation-delay: 0.1s; }
+main > ul > li:nth-child(2) { animation-delay: 0.2s; }
+main > ul > li:nth-child(3) { animation-delay: 0.3s; }
+main > ul > li:nth-child(4) { animation-delay: 0.4s; }
+
+/* Fallback message styling */
+.fallback {
+  grid-column: 2;
+  text-align: center;
+  color: var(--muted);
+  font-size: 1.125rem;
+  margin: 2rem 0;
+  padding: 3rem 2rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 2px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fallback::before {
+  content: "👥";
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.fallback::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Tasks section positioning */
+app-tasks {
+  grid-column: 2;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  main {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  app-tasks {
+    grid-column: 1;
+  }
+  
+  .fallback {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 1rem 0.5rem;
+    gap: 1rem;
+  }
+  
+  main > ul {
+    padding: 1rem;
+  }
+  
+  .fallback {
+    padding: 2rem 1rem;
+    min-height: 200px;
+  }
+  
+  .fallback::before {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 0.5rem;
+  }
+  
+  main > ul::before {
+    font-size: 1.125rem;
+  }
+}

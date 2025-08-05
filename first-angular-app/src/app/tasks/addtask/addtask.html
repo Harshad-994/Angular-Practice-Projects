@@ -1,0 +1,32 @@
+<dialog open>
+  <form class="add-task-form" (ngSubmit)="onSubmit()">
+    <label for="title">Title</label>
+    <input
+      id="title"
+      name="title"
+      type="text"
+      required
+      [(ngModel)]="inputTitle"
+    />
+
+    <label for="description">Description</label>
+    <textarea
+      id="description"
+      name="description"
+      required
+      [(ngModel)]="inputDescription"
+    ></textarea>
+
+    <label for="dueDate">Due Date</label>
+    <input
+      id="dueDate"
+      name="dueDate"
+      type="date"
+      required
+      [(ngModel)]="inputDate"
+    />
+
+    <button type="submit">Add Task</button>
+    <button type="button" (click)="onClickingCancel()">Cancel</button>
+  </form>
+</dialog>

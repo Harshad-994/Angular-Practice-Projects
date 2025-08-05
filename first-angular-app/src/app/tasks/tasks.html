@@ -1,0 +1,15 @@
+<section id="tasks" class="tasks-container">
+  @if (showAddTaskForm) {
+  <app-addtask (closeForm)="closeForm()" [userId]="userId"></app-addtask>
+  }
+
+  <header>
+    <h2>{{ username }}'s Tasks</h2>
+    <button (click)="onClickingAddTask()">Add task</button>
+  </header>
+  <ul class="tasks-list">
+    @for (task of selectedUsersTasks; track task.id) {
+    <app-task [task]="task"></app-task>
+    }
+  </ul>
+</section>

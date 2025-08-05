@@ -1,0 +1,138 @@
+.user-container {
+  width: 100%;
+}
+
+.user-actions {
+  width: 100%;
+}
+
+.user-actions button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.user-actions button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(37, 99, 235, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.user-actions button:hover::before {
+  left: 100%;
+}
+
+.user-actions button:hover {
+  border-color: var(--primary-color);
+  background: var(--surface-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.user-actions button.active {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.user-actions button.active::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+}
+
+.user-actions button img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.user-actions button:hover img {
+  border-color: var(--primary-color);
+  transform: scale(1.05);
+}
+
+.user-actions button.active img {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.user-actions button span {
+  font-weight: 600;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.user-actions button.active span {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading state */
+.user-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.user-actions button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .user-actions button {
+    padding: 0.875rem;
+    font-size: 0.9rem;
+  }
+
+  .user-actions button img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-actions button {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .user-actions button img {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}

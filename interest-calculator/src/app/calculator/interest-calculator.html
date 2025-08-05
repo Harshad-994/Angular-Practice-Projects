@@ -1,0 +1,19 @@
+<h3>Enter values</h3>
+
+<form (ngSubmit)="onSubmit()">
+  <input
+    type="text"
+    placeholder="Amount"
+    name="amount"
+    [(ngModel)]="inputAmount"
+  />
+  <input
+    type="text"
+    placeholder="Interest Rate"
+    name="rate"
+    [(ngModel)]="inputRate"
+  />
+  <input type="text" placeholder="Years" name="time" [(ngModel)]="inputTime" />
+  <button type="submit">Calculate</button>
+  <button type="reset">Reset</button>
+</form>
