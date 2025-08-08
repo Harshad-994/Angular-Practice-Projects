@@ -8,13 +8,28 @@ import { TasksService } from './tasks.service';
   imports: [Task, Addtask],
   templateUrl: './tasks.html',
   styleUrl: './tasks.css',
+  // host: {
+  //   '(click)': 'onClick()',
+  //   class: 'temp',
+  // },
 })
 export class Tasks {
   @Input({ required: true }) username!: string;
   @Input({ required: true }) userId!: string;
+
+  // @HostListener('click') temp() {
+  //   console.log('hello');
+  // }
   showAddTaskForm = false;
 
   constructor(private taskService: TasksService) {}
+  // ngDoCheck(): void {
+  //   if (this.showAddTaskForm) {
+  //     console.log('form is visible');
+  //   } else {
+  //     console.log('form is not visible.');
+  //   }
+  // }
 
   get selectedUsersTasks() {
     return this.taskService.getUserTasks(this.userId);
@@ -27,4 +42,12 @@ export class Tasks {
   closeForm() {
     this.showAddTaskForm = false;
   }
+
+  // onClick() {
+  //   console.log('clicked!');
+  // }
+
+  // ngOnInit() {
+  //   console.log('tasks component rendered!');
+  // }
 }

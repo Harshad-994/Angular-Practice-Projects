@@ -1,0 +1,12 @@
+<a href="https://www.google.com/" appSafeLink="google">Google</a>
+<a href="https://www.youtube.com/">Youtube</a>
+<a href="https://www.medium.com/">Medium</a>
+<a href="#" appSafeLink="twitter">Twitter</a>
+
+<form (ngSubmit)="onSubmit(+input.value)">
+  <input appLog type="text" name="number" #input />
+</form>
+<p>{{ tempStr | temp : "lower" }}</p>
+<ng-template [showNumber]="inputNumber() + ''">
+  <h3>You guessed that number!</h3>
+</ng-template>

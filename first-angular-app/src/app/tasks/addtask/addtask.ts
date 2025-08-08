@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   EventEmitter,
   inject,
   Input,
@@ -16,6 +17,11 @@ import { TasksService } from '../tasks.service';
   styleUrl: './addtask.css',
 })
 export class Addtask {
+  constructor() {
+    effect(() => {
+      console.log(`title : ${this.inputTitle()}`);
+    });
+  }
   @Output() closeForm = new EventEmitter<void>();
   @Input({ required: true }) userId!: string;
   inputTitle = signal('');

@@ -1,0 +1,14 @@
+a,
+input {
+  padding: 0.3rem 0.6rem;
+  font-weight: 500;
+  border-radius: 4px;
+  border: 1px solid rgba(128, 128, 128, 0.486);
+  color: #0c0c0c;
+  margin: 0.2rem;
+}
+
+input {
+  margin-top: 1rem;
+  outline: none;
+}
