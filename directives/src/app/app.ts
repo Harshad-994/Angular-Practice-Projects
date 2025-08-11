@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { SafeLinkDirective } from './safe-link.directive';
 import { FormsModule } from '@angular/forms';
 import { StructuralDirective } from './structural.directive';
@@ -9,12 +9,14 @@ import {
   LUCKY_NUMBERS_TOKEN,
   luckyNumbersProvider,
 } from './lucky-numbers-array';
+import { Link } from "./link/link";
+import { ManualChangeDetection } from "./manual-change-detection/manual-change-detection";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
-  imports: [SafeLinkDirective, FormsModule, StructuralDirective, CustomPipe],
+  imports: [SafeLinkDirective, FormsModule, StructuralDirective, CustomPipe, Link, ManualChangeDetection],
   hostDirectives: [LogDirective],
   providers: [luckyNumbersProvider],
 })
