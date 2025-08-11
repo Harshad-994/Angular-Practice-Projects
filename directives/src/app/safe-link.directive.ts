@@ -1,4 +1,9 @@
-import { Directive, ElementRef, inject, input } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  inject,
+  input,
+} from '@angular/core';
 import { LogDirective } from './log.directive';
 
 @Directive({

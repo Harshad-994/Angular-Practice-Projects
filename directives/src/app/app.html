@@ -1,4 +1,9 @@
-<a href="https://www.google.com/" appSafeLink="google">Google</a>
+<a
+  href="https://www.google.com/"
+  appSafeLink="google"
+  (click)="onClick('google')"
+  >Google</a
+>
 <a href="https://www.youtube.com/">Youtube</a>
 <a href="https://www.medium.com/">Medium</a>
 <a href="#" appSafeLink="twitter">Twitter</a>
@@ -10,3 +15,8 @@
 <ng-template [showNumber]="inputNumber() + ''">
   <h3>You guessed that number!</h3>
 </ng-template>
+
+<h3>Frequent numbers are :</h3>
+@for (n of luckyNumbers; track $index) {
+<p>{{ n }}</p>
+}
