@@ -1,0 +1,307 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>🔗 Piping with .pipe()</h1>
+    <p class="lesson-subtitle">Phase 1: Fundamentals - The Modern Way to Chain Operators</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Understand the .pipe() method and its benefits</li>
+      <li>Learn the modern syntax for chaining operators</li>
+      <li>Master operator ordering for performance</li>
+      <li>Write readable and maintainable Observable pipelines</li>
+      <li>Handle errors effectively in piped operations</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Key Concepts</h2>
+    <div class="concept-grid">
+      <div class="concept-card modern-card">
+        <h3>🆕 Modern Syntax</h3>
+        <p><strong>Purpose:</strong> Chain operators using .pipe()</p>
+        <p><strong>Benefit:</strong> Better tree-shaking, smaller bundles</p>
+        <code>obs.pipe(op1(), op2())</code>
+      </div>
+      <div class="concept-card performance-card">
+        <h3>⚡ Performance</h3>
+        <p><strong>Purpose:</strong> Optimize operator order</p>
+        <p><strong>Benefit:</strong> Filter early, transform late</p>
+        <code>filter() before map()</code>
+      </div>
+      <div class="concept-card readable-card">
+        <h3>📖 Readability</h3>
+        <p><strong>Purpose:</strong> Clear, step-by-step processing</p>
+        <p><strong>Benefit:</strong> Easy to debug and maintain</p>
+        <code>One operator per line</code>
+      </div>
+      <div class="concept-card composable-card">
+        <h3>🧩 Composable</h3>
+        <p><strong>Purpose:</strong> Reusable operator combinations</p>
+        <p><strong>Benefit:</strong> DRY principle, testable units</p>
+        <code>Custom operator functions</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison-section">
+    <h2>🔄 Old vs New Syntax</h2>
+    <div class="syntax-comparison">
+      <div class="old-syntax">
+        <h3>❌ Old Way (Deprecated)</h3>
+        <pre><code>observable
+  .map(x =&gt; x * 2)
+  .filter(x =&gt; x &gt; 10)
+  .subscribe(console.log);</code></pre>
+        <p class="warning">⚠️ Deprecated since RxJS 5.5</p>
+      </div>
+      <div class="new-syntax">
+        <h3>✅ New Way (Modern)</h3>
+        <pre><code>observable.pipe(
+  map(x =&gt; x * 2),
+  filter(x =&gt; x &gt; 10)
+).subscribe(console.log);</code></pre>
+        <p class="success">✅ Current best practice</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: Basic Piping -->
+    <div class="example-card">
+      <h3>Example 1: Basic Piping Syntax</h3>
+      <p>Learn the fundamental .pipe() syntax and how operators flow through the pipeline.</p>
+      
+      <button class="example-button basic-button" (click)="runBasicPipeExample()">
+        🔗 Run Basic Piping
+      </button>
+      
+      <div class="output-section" *ngIf="basicPipeOutput().length > 0">
+        <h4>🔄 Pipeline Flow:</h4>
+        <div class="output-list pipeline-output">
+          <div *ngFor="let output of basicPipeOutput(); let i = index" 
+               class="output-item"
+               [class.step-1]="output.includes('Original')"
+               [class.step-2]="output.includes('Doubled')"
+               [class.step-3]="output.includes('Filtered')"
+               [class.step-4]="output.includes('Final')">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const numbers$ = of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+const processed$ = numbers$.pipe(
+  tap(x =&gt; console.log(`Original: $&#123;x&#125;`)),
+  map(x =&gt; x * 2),
+  tap(x =&gt; console.log(`Doubled: $&#123;x&#125;`)),
+  filter(x =&gt; x &gt; 10),
+  tap(x =&gt; console.log(`Filtered: $&#123;x&#125;`))
+);
+
+processed$.subscribe(result =&gt; console.log(`Final: $&#123;result&#125;`));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: Complex Piping Chain -->
+    <div class="example-card">
+      <h3>Example 2: Complex Piping Chain</h3>
+      <p>See how multiple operators work together in a real-world search scenario.</p>
+      
+      <button class="example-button complex-button" (click)="runComplexPipeExample()">
+        🔍 Run Complex Pipeline
+      </button>
+      
+      <div class="output-section" *ngIf="complexPipeOutput().length > 0">
+        <h4>🔍 Search Pipeline:</h4>
+        <div class="output-list search-output">
+          <div *ngFor="let output of complexPipeOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const searchResults$ = searchInput$.pipe(
+  filter(term =&gt; term.length &gt;= 2),    // Min 2 chars
+  distinctUntilChanged(),              // Only if different
+  debounceTime(300),                   // Wait for pause
+  switchMap(term =&gt; apiCall(term)),    // Switch to new search
+  tap(result =&gt; console.log(result))   // Log results
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: Performance Benefits -->
+    <div class="example-card">
+      <h3>Example 3: Performance Benefits</h3>
+      <p>Understand how proper operator ordering improves performance.</p>
+      
+      <button class="example-button performance-button" (click)="runPerformanceExample()">
+        ⚡ Run Performance Test
+      </button>
+      
+      <div class="output-section" *ngIf="performanceOutput().length > 0">
+        <h4>⚡ Performance Results:</h4>
+        <div class="output-list performance-output">
+          <div *ngFor="let output of performanceOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// ✅ EFFICIENT: Filter early, transform late
+const optimized$ = data$.pipe(
+  filter(x =&gt; x % 10 === 0),  // Reduce dataset first
+  map(x =&gt; x * x),            // Expensive operation on fewer items
+  take(10)                    // Limit results
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: Readable Code Structure -->
+    <div class="example-card">
+      <h3>Example 4: Readable Code Structure</h3>
+      <p>Learn how to structure pipelines for maximum readability and maintainability.</p>
+      
+      <button class="example-button readable-button" (click)="runReadabilityExample()">
+        📖 Run Readability Example
+      </button>
+      
+      <div class="output-section" *ngIf="readabilityOutput().length > 0">
+        <h4>📋 User Processing Pipeline:</h4>
+        <div class="output-list readable-output">
+          <div *ngFor="let output of readabilityOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const processedUsers$ = users$.pipe(
+  // Step 1: Log incoming data
+  tap(user =&gt; console.log(`Processing: $&#123;user.name&#125;`)),
+  
+  // Step 2: Business logic filters
+  filter(user =&gt; user.active),
+  filter(user =&gt; user.age &gt;= 18),
+  filter(user =&gt; user.department === 'Engineering'),
+  
+  // Step 3: Data transformation
+  map(user =&gt; (&#123;
+    displayName: `$&#123;user.name&#125; ($&#123;user.age&#125;)`,
+    seniority: user.age &gt;= 30 ? 'Senior' : 'Junior'
+  &#125;))
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Operator Order Matters -->
+    <div class="example-card">
+      <h3>Example 5: Operator Order Matters</h3>
+      <p>See the performance difference between efficient and inefficient operator ordering.</p>
+      
+      <button class="example-button order-button" (click)="runOrderExample()">
+        🔄 Run Order Comparison
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Comparison:</h4>
+        <div class="order-comparison">
+          <div class="inefficient">
+            <h5>❌ Inefficient</h5>
+            <pre><code>numbers$.pipe(
+  map(x =&gt; x * x),      // Expensive on ALL items
+  filter(x =&gt; x &gt; 25)   // Filter AFTER transformation
+)</code></pre>
+          </div>
+          <div class="efficient">
+            <h5>✅ Efficient</h5>
+            <pre><code>numbers$.pipe(
+  filter(x =&gt; x &gt; 5),   // Filter FIRST (cheap)
+  map(x =&gt; x * x)       // Transform FEWER items
+)</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Example 6: Error Handling -->
+    <div class="example-card">
+      <h3>Example 6: Error Handling in Pipes</h3>
+      <p>Learn how errors propagate through pipelines and how to handle them.</p>
+      
+      <button class="example-button error-button" (click)="runErrorHandlingExample()">
+        ❌ Run Error Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const safeProcessing$ = data$.pipe(
+  tap(x =&gt; console.log(`Input: $&#123;x&#125;`)),
+  map(x =&gt; &#123;
+    if (x === 0) throw new Error('Division by zero!');
+    return 100 / x;
+  &#125;),
+  tap(x =&gt; console.log(`Result: $&#123;x&#125;`))
+);
+
+safeProcessing$.subscribe(&#123;
+  next: value =&gt; console.log(`Success: $&#123;value&#125;`),
+  error: error =&gt; console.error(`Error: $&#123;error.message&#125;`)
+&#125;);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Piping Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🎯 One Operator Per Line</h4>
+        <p>Write each operator on a separate line for better readability and debugging</p>
+      </div>
+      <div class="practice-item">
+        <h4>⚡ Filter Early</h4>
+        <p>Place filter operators before expensive transformations to improve performance</p>
+      </div>
+      <div class="practice-item">
+        <h4>📝 Use tap() for Debugging</h4>
+        <p>Add tap() operators to inspect values at different pipeline stages</p>
+      </div>
+      <div class="practice-item">
+        <h4>🧩 Create Reusable Operators</h4>
+        <p>Extract common operator combinations into reusable functions</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔍 Comment Complex Logic</h4>
+        <p>Add comments to explain complex operator chains and business logic</p>
+      </div>
+      <div class="practice-item">
+        <h4>⚠️ Handle Errors Gracefully</h4>
+        <p>Use catchError and retry operators to handle errors in pipelines</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Transformation Operators</h3>
+    <p>Now that you've mastered piping, let's dive into the powerful transformation operators: <code>switchMap</code>, <code>mergeMap</code>, and <code>concatMap</code>!</p>
+  </div>
+</div>

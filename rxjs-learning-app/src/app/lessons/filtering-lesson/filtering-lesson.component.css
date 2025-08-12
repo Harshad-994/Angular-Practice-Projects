@@ -1,0 +1,319 @@
+/* Import base lesson styles */
+@import '../lesson-base.css';
+
+/* Filtering operator specific button colors */
+.debounce-button {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.debounce-button:hover {
+  box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+}
+
+.distinct-button {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.distinct-button:hover {
+  box-shadow: 0 4px 8px rgba(237, 137, 54, 0.3);
+}
+
+.takeuntil-button {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+}
+
+.takeuntil-button:hover {
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.3);
+}
+
+.throttle-button {
+  background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+.throttle-button:hover {
+  box-shadow: 0 4px 8px rgba(159, 122, 234, 0.3);
+}
+
+.combined-button {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+}
+
+.combined-button:hover {
+  box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+}
+
+.performance-button {
+  background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+}
+
+.performance-button:hover {
+  box-shadow: 0 4px 8px rgba(56, 178, 172, 0.3);
+}
+
+/* Operator-specific concept cards */
+.debounce-card {
+  border-left: 4px solid #48bb78;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.distinct-card {
+  border-left: 4px solid #ed8936;
+  background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%);
+}
+
+.takeuntil-card {
+  border-left: 4px solid #e53e3e;
+  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+}
+
+.throttle-card {
+  border-left: 4px solid #9f7aea;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%);
+}
+
+/* Timing Comparison Section */
+.timing-comparison {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.timing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.timing-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid;
+  text-align: center;
+}
+
+.debounce-timing {
+  border-color: #48bb78;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.throttle-timing {
+  border-color: #9f7aea;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%);
+}
+
+.timing-card h4 {
+  margin: 0 0 1rem 0;
+  color: #2b6cb0;
+  font-size: 1.2rem;
+}
+
+.timing-diagram {
+  font-family: 'Courier New', monospace;
+  background: #1a202c;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.events {
+  color: #63b3ed;
+  margin-bottom: 0.5rem;
+}
+
+.result {
+  color: #68d391;
+  font-weight: bold;
+}
+
+.timing-card p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+/* Output styling for different operators */
+.debounce-output .output-item:contains("Typed") {
+  border-left: 3px solid #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.debounce-output .output-item:contains("Search") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+  font-weight: 600;
+}
+
+.distinct-output .output-item:contains("Without") {
+  color: #2b6cb0;
+  font-weight: 600;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.distinct-output .output-item:contains("With") {
+  color: #2b6cb0;
+  font-weight: 600;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.distinct-output .output-item:contains("❌") {
+  border-left: 3px solid #e53e3e;
+  background: rgba(229, 62, 62, 0.1);
+}
+
+.distinct-output .output-item:contains("✅") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.takeuntil-output .output-item:contains("Task") {
+  border-left: 3px solid #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.takeuntil-output .output-item:contains("Clean") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.throttle-output .output-item:contains("Click") {
+  border-left: 3px solid #718096;
+  background: rgba(113, 128, 150, 0.1);
+}
+
+.throttle-output .output-item:contains("Throttled") {
+  border-left: 3px solid #9f7aea;
+  background: rgba(159, 122, 234, 0.1);
+  font-weight: 600;
+}
+
+.throttle-output .output-item:contains("Debounced") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+  font-weight: 600;
+}
+
+.combined-output .output-item {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+}
+
+.combined-output .output-item:contains("Input") {
+  background: rgba(113, 128, 150, 0.1);
+}
+
+.combined-output .output-item:contains("Valid") {
+  background: rgba(66, 153, 225, 0.1);
+  border-left: 3px solid #4299e1;
+}
+
+.combined-output .output-item:contains("Distinct") {
+  background: rgba(237, 137, 54, 0.1);
+  border-left: 3px solid #ed8936;
+}
+
+.combined-output .output-item:contains("Debounced") {
+  background: rgba(72, 187, 120, 0.1);
+  border-left: 3px solid #48bb78;
+}
+
+.combined-output .output-item:contains("Search") {
+  background: rgba(159, 122, 234, 0.1);
+  border-left: 3px solid #9f7aea;
+  font-weight: 600;
+}
+
+/* Use Cases Section */
+.use-cases {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f0f8ff;
+  border-radius: 8px;
+  border-left: 4px solid #4299e1;
+}
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.use-case-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.use-case-card h4 {
+  margin: 0 0 1rem 0;
+  color: #2b6cb0;
+  font-size: 1.1rem;
+}
+
+.use-case-card ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.use-case-card li {
+  margin: 0.5rem 0;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+/* Enhanced animations */
+.output-item {
+  animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timing-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timing-diagram {
+    font-size: 0.8rem;
+  }
+}
+
+/* Code highlighting for filtering operators */
+.code-example pre code {
+  line-height: 1.6;
+}
+
+.code-example pre code .filter-operator {
+  color: #68d391;
+  font-weight: bold;
+}
+
+.code-example pre code .comment {
+  color: #a0aec0;
+  font-style: italic;
+}

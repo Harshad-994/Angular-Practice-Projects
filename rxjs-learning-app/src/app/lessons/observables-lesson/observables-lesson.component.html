@@ -1,0 +1,225 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>📡 Observables & Subscriptions</h1>
+    <p class="lesson-subtitle">Phase 1: Fundamentals - The Foundation of RxJS</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Understand what Observables are and how they work</li>
+      <li>Learn how to create and subscribe to Observables</li>
+      <li>Master subscription management and cleanup</li>
+      <li>Explore different ways to create Observables</li>
+      <li>Handle errors in Observable streams</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Key Concepts</h2>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <h3>🔍 Observable</h3>
+        <p>A lazy Push collection that can emit multiple values over time. Think of it as a function that can return multiple values asynchronously.</p>
+      </div>
+      <div class="concept-card">
+        <h3>👀 Observer</h3>
+        <p>An object with next(), error(), and complete() methods that defines how to handle emitted values.</p>
+      </div>
+      <div class="concept-card">
+        <h3>🔗 Subscription</h3>
+        <p>Represents the execution of an Observable. Used to unsubscribe and clean up resources.</p>
+      </div>
+      <div class="concept-card">
+        <h3>🏭 Producer</h3>
+        <p>The source of values (HTTP requests, user events, timers, etc.) that the Observable wraps.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: Basic Observable -->
+    <div class="example-card">
+      <h3>Example 1: Basic Observable Creation</h3>
+      <p>Create a simple Observable that emits values and completes.</p>
+      
+      <button class="example-button" (click)="runBasicObservableExample()">
+        🎯 Run Basic Observable
+      </button>
+      
+      <div class="output-section" *ngIf="basicObservableOutput().length > 0">
+        <h4>📤 Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of basicObservableOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const basicObservable = new Observable&lt;number&gt;(observer =&gt; &#123;
+  observer.next(1);
+  observer.next(2);
+  observer.next(3);
+  
+  setTimeout(() =&gt; &#123;
+    observer.next(4);
+    observer.complete();
+  &#125;, 1000);
+&#125;);
+
+basicObservable.subscribe(&#123;
+  next: (value) =&gt; console.log(`Received: $&#123;value&#125;`),
+  error: (error) =&gt; console.error('Error:', error),
+  complete: () =&gt; console.log('Completed')
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: Subscription Management -->
+    <div class="example-card">
+      <h3>Example 2: Subscription Management</h3>
+      <p>Learn how to subscribe and unsubscribe from Observables properly.</p>
+      
+      <div class="subscription-controls">
+        <button 
+          class="example-button" 
+          [class.danger]="isSubscribed()"
+          (click)="toggleIntervalSubscription()">
+          {{ isSubscribed() ? '🛑 Unsubscribe' : '▶️ Subscribe to Interval' }}
+        </button>
+        
+        <div class="status-indicator">
+          <span class="status-label">Status:</span>
+          <span [class]="isSubscribed() ? 'status-active' : 'status-inactive'">
+            {{ subscriptionStatus() }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="output-section" *ngIf="intervalOutput().length > 0">
+        <h4>⏰ Interval Output:</h4>
+        <div class="output-list interval-output">
+          <div *ngFor="let output of intervalOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const intervalObservable = interval(1000);
+
+const subscription = intervalObservable.subscribe(&#123;
+  next: (value) =&gt; console.log(`Tick: $&#123;value&#125;`)
+&#125;);
+
+// Later, clean up
+subscription.unsubscribe();</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: Array Observable -->
+    <div class="example-card">
+      <h3>Example 3: Observable from Array</h3>
+      <p>Convert arrays into Observable streams using the <code>from</code> operator.</p>
+      
+      <button class="example-button" (click)="runArrayObservableExample()">
+        📦 Run Array Observable
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const numbers = [10, 20, 30, 40, 50];
+const arrayObservable = from(numbers);
+
+arrayObservable.subscribe(&#123;
+  next: (value) =&gt; console.log(`Array value: $&#123;value&#125;`)
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: Error Handling -->
+    <div class="example-card">
+      <h3>Example 4: Error Handling</h3>
+      <p>Learn how to handle errors in Observable streams.</p>
+      
+      <button class="example-button" (click)="runErrorObservableExample()">
+        ❌ Run Error Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const errorObservable = new Observable(observer =&gt; &#123;
+  observer.next(1);
+  observer.next(2);
+  
+  setTimeout(() =&gt; &#123;
+    observer.error(new Error('Something went wrong!'));
+  &#125;, 1000);
+&#125;);
+
+errorObservable.subscribe(&#123;
+  next: (value) =&gt; console.log(`Value: $&#123;value&#125;`),
+  error: (error) =&gt; console.error(`Error: $&#123;error.message&#125;`)
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Timer Observable -->
+    <div class="example-card">
+      <h3>Example 5: Timer Observable</h3>
+      <p>Use timer to create time-based Observables.</p>
+      
+      <button class="example-button" (click)="runTimerExample()">
+        ⏲️ Run Timer Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// Emit after 2 seconds, then every 1 second
+const timerObservable = timer(2000, 1000);
+
+timerObservable.subscribe(&#123;
+  next: (value) =&gt; console.log(`Timer: $&#123;value&#125;`)
+&#125;);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🧹 Always Unsubscribe</h4>
+        <p>Prevent memory leaks by unsubscribing from Observables in ngOnDestroy()</p>
+      </div>
+      <div class="practice-item">
+        <h4>🎯 Use Async Pipe</h4>
+        <p>In templates, prefer the async pipe which automatically handles subscriptions</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔄 Handle Errors</h4>
+        <p>Always provide error handlers to prevent uncaught exceptions</p>
+      </div>
+      <div class="practice-item">
+        <h4>📝 Use takeUntil Pattern</h4>
+        <p>Use takeUntil with a destroy subject for automatic cleanup</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Basic Operators</h3>
+    <p>Now that you understand Observables and Subscriptions, let's learn about the basic operators: map, filter, and tap!</p>
+  </div>
+</div>

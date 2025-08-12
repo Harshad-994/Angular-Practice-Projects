@@ -1,0 +1,159 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>🚀 RxJS Learning Journey</h1>
+    <p>Master RxJS from Theory to Practice</p>
+  </header>
+
+  <nav class="navigation">
+    <div class="nav-section">
+      <h3>Phase 1: Fundamentals</h3>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'observables'"
+        (click)="setCurrentTopic('observables')">
+        1. Observables & Subscriptions
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'basic-operators'"
+        (click)="setCurrentTopic('basic-operators')">
+        2. Basic Operators
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'creation-operators'"
+        (click)="setCurrentTopic('creation-operators')">
+        3. Creation Operators
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'piping'"
+        (click)="setCurrentTopic('piping')">
+        4. Piping with .pipe()
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <h3>Phase 2: Intermediate</h3>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'transformation'"
+        (click)="setCurrentTopic('transformation')">
+        5. Transformation Operators
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'filtering'"
+        (click)="setCurrentTopic('filtering')">
+        6. Filtering Operators
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'combination'"
+        (click)="setCurrentTopic('combination')">
+        7. Combination Operators
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'error-handling'"
+        (click)="setCurrentTopic('error-handling')">
+        8. Error Handling
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <h3>Phase 3: Advanced</h3>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'subjects'"
+        (click)="setCurrentTopic('subjects')">
+        9. Subjects
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'multicasting'"
+        (click)="setCurrentTopic('multicasting')">
+        10. Multicasting
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'higher-order'"
+        (click)="setCurrentTopic('higher-order')">
+        11. Higher-order Operators
+      </button>
+      <button 
+        class="nav-button" 
+        [class.active]="currentTopic() === 'custom-operators'"
+        (click)="setCurrentTopic('custom-operators')">
+        12. Custom Operators
+      </button>
+    </div>
+  </nav>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+    
+    <!-- Dynamic content based on selected topic -->
+    @switch (currentTopic()) {
+      @case ('observables') {
+        <app-observables-lesson></app-observables-lesson>
+      }
+      @case ('basic-operators') {
+        <app-basic-operators-lesson></app-basic-operators-lesson>
+      }
+      @case ('creation-operators') {
+        <app-creation-operators-lesson></app-creation-operators-lesson>
+      }
+      @case ('piping') {
+        <app-piping-lesson></app-piping-lesson>
+      }
+      @case ('transformation') {
+        <app-transformation-lesson></app-transformation-lesson>
+      }
+      @case ('filtering') {
+        <app-filtering-lesson></app-filtering-lesson>
+      }
+      @case ('combination') {
+        <app-combination-lesson></app-combination-lesson>
+      }
+      @case ('error-handling') {
+        <app-error-handling-lesson></app-error-handling-lesson>
+      }
+      @case ('subjects') {
+        <app-subjects-lesson></app-subjects-lesson>
+      }
+      @case ('multicasting') {
+        <app-multicasting-lesson></app-multicasting-lesson>
+      }
+      @case ('higher-order') {
+        <app-higher-order-lesson></app-higher-order-lesson>
+      }
+      @case ('custom-operators') {
+        <app-custom-operators-lesson></app-custom-operators-lesson>
+      }
+      @default {
+        <div class="welcome">
+          <h2>Welcome to RxJS Learning!</h2>
+          <p>Select a topic from the navigation to start learning RxJS step by step.</p>
+          <div class="learning-path">
+            <h3>📚 Your Learning Path:</h3>
+            <ol>
+              <li><strong>Phase 1 (Fundamentals):</strong> Start with Observables, then Basic Operators</li>
+              <li><strong>Phase 2 (Intermediate):</strong> Master Transformation and Filtering</li>
+              <li><strong>Phase 3 (Advanced):</strong> Learn Subjects and Advanced Patterns</li>
+            </ol>
+          </div>
+          <div class="tips">
+            <h3>💡 Learning Tips:</h3>
+            <ul>
+              <li>Each lesson includes theory, examples, and interactive demos</li>
+              <li>Practice with the provided exercises</li>
+              <li>Check the console for detailed logs</li>
+              <li>Focus on modern, non-deprecated operators</li>
+            </ul>
+          </div>
+        </div>
+      }
+    }
+  </main>
+</div>

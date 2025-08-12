@@ -1,0 +1,326 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>❌ Error Handling</h1>
+    <p class="lesson-subtitle">Phase 2: Intermediate - Handle Errors Gracefully</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Master essential error handling operators</li>
+      <li>Learn to implement retry logic for failed operations</li>
+      <li>Understand cleanup patterns with finalize</li>
+      <li>Apply advanced error handling strategies</li>
+      <li>Handle real-world HTTP error scenarios</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Error Handling Operators</h2>
+    <div class="concept-grid">
+      <div class="concept-card catch-card">
+        <h3>🛡️ catchError</h3>
+        <p><strong>Purpose:</strong> Handle errors and provide fallbacks</p>
+        <p><strong>Use case:</strong> Graceful error recovery, fallback values</p>
+        <code>catchError(err =&gt; of(fallback))</code>
+      </div>
+      <div class="concept-card retry-card">
+        <h3>🔄 retry</h3>
+        <p><strong>Purpose:</strong> Automatically retry failed operations</p>
+        <p><strong>Use case:</strong> Network requests, temporary failures</p>
+        <code>retry(3)</code>
+      </div>
+      <div class="concept-card finalize-card">
+        <h3>🏁 finalize</h3>
+        <p><strong>Purpose:</strong> Execute cleanup code</p>
+        <p><strong>Use case:</strong> Resource cleanup, logging</p>
+        <code>finalize(() =&gt; cleanup())</code>
+      </div>
+      <div class="concept-card retrywhen-card">
+        <h3>⏳ retryWhen</h3>
+        <p><strong>Purpose:</strong> Advanced retry with custom logic</p>
+        <p><strong>Use case:</strong> Exponential backoff, conditional retries</p>
+        <code>retryWhen(errors =&gt; strategy)</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: catchError -->
+    <div class="example-card">
+      <h3>Example 1: catchError - Basic Error Handling</h3>
+      <p>Learn how to catch errors and provide fallback values to keep your streams alive.</p>
+      
+      <button class="example-button catch-button" (click)="runCatchErrorExample()">
+        🛡️ Run catchError Example
+      </button>
+      
+      <div class="output-section" *ngIf="catchErrorOutput().length > 0">
+        <h4>🛡️ Error Handling Flow:</h4>
+        <div class="output-list catch-output">
+          <div *ngFor="let output of catchErrorOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const apiCall$ = httpRequest(id).pipe(
+  catchError(error =&gt; &#123;
+    console.error(`Error: $&#123;error.message&#125;`);
+    
+    // Return fallback data instead of terminating
+    return of(&#123; id, data: 'Fallback data', fromCache: true &#125;);
+  &#125;)
+);
+
+// Stream continues even after errors
+apiCall$.subscribe(data =&gt; handleData(data));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: retry -->
+    <div class="example-card">
+      <h3>Example 2: retry - Automatic Retry Logic</h3>
+      <p>Automatically retry failed operations - perfect for handling temporary network issues.</p>
+      
+      <button class="example-button retry-button" (click)="runRetryExample()">
+        🔄 Run retry Example
+      </button>
+      
+      <div class="output-section" *ngIf="retryOutput().length > 0">
+        <h4>🔄 Retry Attempts:</h4>
+        <div class="output-list retry-output">
+          <div *ngFor="let output of retryOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const apiWithRetry$ = unreliableAPI().pipe(
+  retry(3), // Retry up to 3 times
+  catchError(error =&gt; &#123;
+    console.error('All retries failed');
+    return of(&#123; success: false, error: error.message &#125;);
+  &#125;)
+);
+
+// Automatically retries on failure
+apiWithRetry$.subscribe(result =&gt; handleResult(result));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: finalize -->
+    <div class="example-card">
+      <h3>Example 3: finalize - Cleanup Actions</h3>
+      <p>Execute cleanup code regardless of whether the Observable succeeds or fails.</p>
+      
+      <button class="example-button finalize-button" (click)="runFinalizeExample()">
+        🏁 Run finalize Example
+      </button>
+      
+      <div class="output-section" *ngIf="finalizeOutput().length > 0">
+        <h4>🏁 Cleanup Operations:</h4>
+        <div class="output-list finalize-output">
+          <div *ngFor="let output of finalizeOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const operationWithCleanup$ = performOperation().pipe(
+  finalize(() =&gt; &#123;
+    console.log('Cleaning up resources...');
+    // This runs whether operation succeeds or fails
+    cleanup();
+  &#125;)
+);
+
+// Cleanup always happens
+operationWithCleanup$.subscribe(&#123;
+  next: result =&gt; handleSuccess(result),
+  error: error =&gt; handleError(error)
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: Advanced Strategies -->
+    <div class="example-card">
+      <h3>Example 4: Advanced Error Handling Strategies</h3>
+      <p>Implement sophisticated retry strategies like exponential backoff and fallback chains.</p>
+      
+      <button class="example-button strategies-button" (click)="runStrategiesExample()">
+        ⚡ Run Advanced Strategies
+      </button>
+      
+      <div class="output-section" *ngIf="strategiesOutput().length > 0">
+        <h4>⚡ Advanced Strategies:</h4>
+        <div class="output-list strategies-output">
+          <div *ngFor="let output of strategiesOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// Exponential Backoff Strategy
+const exponentialBackoffRetry = (maxRetries: number) =&gt; &#123;
+  return retryWhen(errors =&gt;
+    errors.pipe(
+      delayWhen((error, index) =&gt; &#123;
+        const delay = Math.pow(2, index) * 1000; // 1s, 2s, 4s, 8s...
+        return timer(delay);
+      &#125;),
+      take(maxRetries)
+    )
+  );
+&#125;;
+
+// Fallback Chain Strategy
+const dataWithFallbacks$ = primaryAPI().pipe(
+  catchError(() =&gt; backupAPI()),
+  catchError(() =&gt; cacheAPI()),
+  catchError(() =&gt; of(&#123; data: 'Default data' &#125;))
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Real-world HTTP Errors -->
+    <div class="example-card">
+      <h3>Example 5: Real-world HTTP Error Handling</h3>
+      <p>Handle different HTTP error codes with appropriate strategies for each scenario.</p>
+      
+      <button class="example-button realworld-button" (click)="runRealWorldExample()">
+        🌍 Run Real-world Example
+      </button>
+      
+      <div class="output-section" *ngIf="realWorldOutput().length > 0">
+        <h4>🌐 HTTP Error Handling:</h4>
+        <div class="output-list realworld-output">
+          <div *ngFor="let output of realWorldOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const handleHttpError = (error: any): Observable&lt;any&gt; =&gt; &#123;
+  switch (error.status) &#123;
+    case 0: // Network error
+      return EMPTY; // Triggers retry
+      
+    case 401: // Unauthorized
+      return of(&#123; error: 'Please log in again', redirect: '/login' &#125;);
+      
+    case 404: // Not found
+      return of(&#123; data: null, message: 'Resource not found' &#125;);
+      
+    case 500: // Server error
+      return of(&#123; data: 'Cached data', fromCache: true &#125;);
+      
+    default:
+      return of(&#123; error: 'Something went wrong' &#125;);
+  &#125;
+&#125;;
+
+const request$ = httpRequest(url).pipe(
+  retry(&#123; count: 2, delay: 1000 &#125;),
+  catchError(handleHttpError),
+  finalize(() =&gt; hideLoadingSpinner())
+);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-types">
+    <h2>🚨 Common Error Scenarios</h2>
+    <div class="error-grid">
+      <div class="error-card network-error">
+        <h4>🌐 Network Errors</h4>
+        <p><strong>Strategy:</strong> Retry with exponential backoff</p>
+        <ul>
+          <li>Connection timeout</li>
+          <li>DNS resolution failure</li>
+          <li>Network unavailable</li>
+        </ul>
+      </div>
+      <div class="error-card auth-error">
+        <h4>🔐 Authentication Errors</h4>
+        <p><strong>Strategy:</strong> Redirect to login</p>
+        <ul>
+          <li>401 Unauthorized</li>
+          <li>403 Forbidden</li>
+          <li>Token expired</li>
+        </ul>
+      </div>
+      <div class="error-card client-error">
+        <h4>📝 Client Errors</h4>
+        <p><strong>Strategy:</strong> Show user-friendly message</p>
+        <ul>
+          <li>400 Bad Request</li>
+          <li>404 Not Found</li>
+          <li>422 Validation Error</li>
+        </ul>
+      </div>
+      <div class="error-card server-error">
+        <h4>🚨 Server Errors</h4>
+        <p><strong>Strategy:</strong> Use cached data or retry</p>
+        <ul>
+          <li>500 Internal Server Error</li>
+          <li>502 Bad Gateway</li>
+          <li>503 Service Unavailable</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Error Handling Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🛡️ Always Handle Errors</h4>
+        <p>Every HTTP request should have error handling to prevent stream termination</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔄 Smart Retry Logic</h4>
+        <p>Use exponential backoff for network errors, but don't retry client errors (4xx)</p>
+      </div>
+      <div class="practice-item">
+        <h4>📝 Log for Debugging</h4>
+        <p>Log errors with context information for easier debugging and monitoring</p>
+      </div>
+      <div class="practice-item">
+        <h4>👤 User-Friendly Messages</h4>
+        <p>Show meaningful error messages to users, not technical error details</p>
+      </div>
+      <div class="practice-item">
+        <h4>🏁 Clean Up Resources</h4>
+        <p>Use finalize to ensure cleanup happens regardless of success or failure</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔗 Fallback Strategies</h4>
+        <p>Implement fallback chains: primary → backup → cache → default</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Subjects</h3>
+    <p>Now that you can handle errors gracefully, let's learn about Subjects - special Observables that can multicast to multiple observers!</p>
+  </div>
+</div>

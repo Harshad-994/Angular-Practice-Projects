@@ -1,0 +1,374 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>🏭 Creation Operators</h1>
+    <p class="lesson-subtitle">Phase 1: Fundamentals - Creating Observables from Various Sources</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Master essential creation operators: of, from, interval, timer</li>
+      <li>Learn to create Observables from DOM events with fromEvent</li>
+      <li>Understand special Observables: EMPTY and NEVER</li>
+      <li>Use conditional Observable creation with iif</li>
+      <li>Apply creation operators in real-world scenarios</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Essential Creation Operators</h2>
+    <div class="concept-grid">
+      <div class="concept-card of-card">
+        <h3>📦 of()</h3>
+        <p><strong>Purpose:</strong> Create Observable from individual values</p>
+        <p><strong>Use case:</strong> Static data, testing, default values</p>
+        <code>of(1, 2, 3)</code>
+      </div>
+      <div class="concept-card from-card">
+        <h3>📋 from()</h3>
+        <p><strong>Purpose:</strong> Create Observable from arrays, promises, iterables</p>
+        <p><strong>Use case:</strong> Convert existing data structures</p>
+        <code>from([1, 2, 3])</code>
+      </div>
+      <div class="concept-card interval-card">
+        <h3>⏰ interval()</h3>
+        <p><strong>Purpose:</strong> Emit sequential numbers at intervals</p>
+        <p><strong>Use case:</strong> Polling, periodic updates</p>
+        <code>interval(1000)</code>
+      </div>
+      <div class="concept-card timer-card">
+        <h3>⏲️ timer()</h3>
+        <p><strong>Purpose:</strong> Emit after delay, optionally repeat</p>
+        <p><strong>Use case:</strong> Delayed execution, timeouts</p>
+        <code>timer(1000, 500)</code>
+      </div>
+      <div class="concept-card event-card">
+        <h3>🖱️ fromEvent()</h3>
+        <p><strong>Purpose:</strong> Create Observable from DOM events</p>
+        <p><strong>Use case:</strong> User interactions, event handling</p>
+        <code>fromEvent(button, 'click')</code>
+      </div>
+      <div class="concept-card conditional-card">
+        <h3>🔀 iif()</h3>
+        <p><strong>Purpose:</strong> Conditionally create Observables</p>
+        <p><strong>Use case:</strong> Dynamic Observable selection</p>
+        <code>iif(() =&gt; condition, obs1, obs2)</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: of() operator -->
+    <div class="example-card">
+      <h3>Example 1: of() - Create from Values</h3>
+      <p>The <code>of</code> operator creates an Observable from individual values of any type.</p>
+      
+      <button class="example-button of-button" (click)="runOfExample()">
+        📦 Run of() Example
+      </button>
+      
+      <div class="output-section" *ngIf="ofOutput().length > 0">
+        <h4>📤 of() Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of ofOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const values$ = of(1, 'hello', true, &#123; name: 'Angular' &#125;, [1, 2, 3]);
+
+values$.subscribe(&#123;
+  next: (value) =&gt; console.log(`Emitted: $&#123;value&#125;`),
+  complete: () =&gt; console.log('Completed')
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: from() operator -->
+    <div class="example-card">
+      <h3>Example 2: from() - Create from Iterables</h3>
+      <p>The <code>from</code> operator creates Observables from arrays, promises, and other iterables.</p>
+      
+      <button class="example-button from-button" (click)="runFromExample()">
+        📋 Run from() Example
+      </button>
+      
+      <div class="output-section" *ngIf="fromOutput().length > 0">
+        <h4>📊 from() Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of fromOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// From array
+const array$ = from([10, 20, 30, 40, 50]);
+
+// From string (iterable)
+const string$ = from('RxJS');
+
+// From Promise
+const promise$ = from(Promise.resolve('Promise resolved!'));
+
+array$.subscribe(value =&gt; console.log(`Array: $&#123;value&#125;`));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: interval() operator -->
+    <div class="example-card">
+      <h3>Example 3: interval() - Regular Intervals</h3>
+      <p>The <code>interval</code> operator emits sequential numbers at specified time intervals.</p>
+      
+      <button class="example-button interval-button" (click)="runIntervalExample()">
+        ⏰ Run interval() Example
+      </button>
+      
+      <div class="output-section" *ngIf="intervalOutput().length > 0">
+        <h4>⏰ Interval Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of intervalOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const interval$ = interval(800).pipe(
+  take(6) // Only take first 6 values
+);
+
+interval$.subscribe(&#123;
+  next: (value) =&gt; console.log(`Tick $&#123;value&#125;`),
+  complete: () =&gt; console.log('Completed')
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: timer() operator -->
+    <div class="example-card">
+      <h3>Example 4: timer() - Delayed Emissions</h3>
+      <p>The <code>timer</code> operator emits after a delay, optionally repeating at intervals.</p>
+      
+      <button class="example-button timer-button" (click)="runTimerExample()">
+        ⏲️ Run timer() Example
+      </button>
+      
+      <div class="output-section" *ngIf="timerOutput().length > 0">
+        <h4>⏲️ Timer Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of timerOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// Wait 1 second, then emit every 600ms
+const timer$ = timer(1000, 600).pipe(
+  take(5) // Only take first 5 values
+);
+
+timer$.subscribe(&#123;
+  next: (value) =&gt; console.log(`Timer $&#123;value&#125;`),
+  complete: () =&gt; console.log('Timer completed')
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: fromEvent() operator -->
+    <div class="example-card">
+      <h3>Example 5: fromEvent() - DOM Events</h3>
+      <p>The <code>fromEvent</code> operator creates Observables from DOM events.</p>
+      
+      <button class="example-button event-button" (click)="runFromEventExample()">
+        🖱️ Run fromEvent() Example
+      </button>
+      
+      <div class="output-section" *ngIf="fromEventOutput().length > 0">
+        <h4>🖱️ Click Events:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of fromEventOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const button = document.querySelector('#myButton');
+const clicks$ = fromEvent(button, 'click').pipe(
+  take(5) // Only take first 5 clicks
+);
+
+clicks$.subscribe(&#123;
+  next: (event) =&gt; console.log('Button clicked!'),
+  complete: () =&gt; console.log('Max clicks reached')
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 6: EMPTY and NEVER -->
+    <div class="example-card">
+      <h3>Example 6: EMPTY &amp; NEVER - Special Observables</h3>
+      <p>Special Observables for specific use cases: immediate completion and infinite waiting.</p>
+      
+      <button class="example-button special-button" (click)="runEmptyNeverExample()">
+        📭 Run EMPTY &amp; NEVER
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// EMPTY - completes immediately without emitting
+EMPTY.subscribe(&#123;
+  next: (value) =&gt; console.log(`EMPTY: $&#123;value&#125;`), // Won't run
+  complete: () =&gt; console.log('EMPTY completed')
+&#125;);
+
+// NEVER - never emits, never completes, never errors
+NEVER.subscribe(&#123;
+  next: (value) =&gt; console.log(`NEVER: $&#123;value&#125;`), // Won't run
+  complete: () =&gt; console.log('NEVER completed') // Won't run
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 7: iif() - Conditional Creation -->
+    <div class="example-card">
+      <h3>Example 7: iif() - Conditional Observable Creation</h3>
+      <p>The <code>iif</code> operator conditionally creates Observables based on a condition.</p>
+      
+      <button class="example-button conditional-button" (click)="runConditionalExample()">
+        🔀 Run iif() Example
+      </button>
+      
+      <div class="output-section" *ngIf="conditionalOutput().length > 0">
+        <h4>🔀 Conditional Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of conditionalOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const createConditionalObservable = (condition: boolean) =&gt; &#123;
+  return iif(
+    () =&gt; condition,
+    of('Condition is TRUE! 🎉'),
+    of('Condition is FALSE! ❌')
+  );
+&#125;;
+
+// Test with different conditions
+createConditionalObservable(true).subscribe(console.log);
+createConditionalObservable(false).subscribe(console.log);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 8: Real-world Scenario -->
+    <div class="example-card">
+      <h3>Example 8: Real-world Scenario</h3>
+      <p>Practical application: Data loading with cache-first strategy.</p>
+      
+      <button class="example-button real-world-button" (click)="runRealWorldExample()">
+        🌍 Run Real-world Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// Load from cache first
+const cacheData$ = from(['Cached Item A', 'Cached Item B']);
+
+// Then load from API
+const apiData$ = from(['User 1', 'User 2', 'User 3']);
+
+// Conditional loading based on cache availability
+const dataSource$ = iif(
+  () =&gt; cacheAvailable,
+  cacheData$,
+  apiData$
+);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="operator-comparison">
+    <h2>📊 Creation Operators Comparison</h2>
+    <div class="comparison-table">
+      <div class="comparison-header">
+        <div>Operator</div>
+        <div>Input Type</div>
+        <div>Emission Pattern</div>
+        <div>Common Use Cases</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name of-highlight">of</div>
+        <div>Individual values</div>
+        <div>Synchronous, immediate</div>
+        <div>Static data, testing, defaults</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name from-highlight">from</div>
+        <div>Arrays, Promises, Iterables</div>
+        <div>Sequential emission</div>
+        <div>Converting existing data</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name interval-highlight">interval</div>
+        <div>Time period (ms)</div>
+        <div>Regular intervals</div>
+        <div>Polling, periodic tasks</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name timer-highlight">timer</div>
+        <div>Delay + optional period</div>
+        <div>Delayed start</div>
+        <div>Timeouts, delayed execution</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🎯 Choose the Right Operator</h4>
+        <p>Use <code>of</code> for static values, <code>from</code> for arrays/promises</p>
+      </div>
+      <div class="practice-item">
+        <h4>⏰ Manage Time-based Observables</h4>
+        <p>Always unsubscribe from <code>interval</code> and <code>timer</code> to prevent memory leaks</p>
+      </div>
+      <div class="practice-item">
+        <h4>🖱️ Event Cleanup</h4>
+        <p>Use <code>takeUntil</code> with <code>fromEvent</code> for automatic cleanup</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔀 Conditional Logic</h4>
+        <p>Use <code>iif</code> for clean conditional Observable creation</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Piping with .pipe()</h3>
+    <p>Now that you can create Observables, let's learn the modern way to chain operators using the <code>.pipe()</code> method!</p>
+  </div>
+</div>

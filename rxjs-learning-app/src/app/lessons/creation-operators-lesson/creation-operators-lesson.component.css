@@ -1,0 +1,198 @@
+/* Import base lesson styles */
+@import '../lesson-base.css';
+
+/* Creation operator specific button colors */
+.of-button {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.of-button:hover {
+  box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+}
+
+.from-button {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.from-button:hover {
+  box-shadow: 0 4px 8px rgba(237, 137, 54, 0.3);
+}
+
+.interval-button {
+  background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+.interval-button:hover {
+  box-shadow: 0 4px 8px rgba(159, 122, 234, 0.3);
+}
+
+.timer-button {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+}
+
+.timer-button:hover {
+  box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+}
+
+.event-button {
+  background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+}
+
+.event-button:hover {
+  box-shadow: 0 4px 8px rgba(56, 178, 172, 0.3);
+}
+
+.special-button {
+  background: linear-gradient(135deg, #718096 0%, #4a5568 100%);
+}
+
+.special-button:hover {
+  box-shadow: 0 4px 8px rgba(113, 128, 150, 0.3);
+}
+
+.conditional-button {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+}
+
+.conditional-button:hover {
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.3);
+}
+
+.real-world-button {
+  background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+}
+
+.real-world-button:hover {
+  box-shadow: 0 4px 8px rgba(214, 158, 46, 0.3);
+}
+
+/* Operator-specific concept cards */
+.of-card {
+  border-left: 4px solid #48bb78;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.from-card {
+  border-left: 4px solid #ed8936;
+  background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%);
+}
+
+.interval-card {
+  border-left: 4px solid #9f7aea;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%);
+}
+
+.timer-card {
+  border-left: 4px solid #4299e1;
+  background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+}
+
+.event-card {
+  border-left: 4px solid #38b2ac;
+  background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+}
+
+.conditional-card {
+  border-left: 4px solid #e53e3e;
+  background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+}
+
+.concept-card code {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  display: block;
+  margin-top: 0.5rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Operator Comparison Table Highlights */
+.of-highlight {
+  color: #38a169;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%) !important;
+}
+
+.from-highlight {
+  color: #dd6b20;
+  background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%) !important;
+}
+
+.interval-highlight {
+  color: #805ad5;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%) !important;
+}
+
+.timer-highlight {
+  color: #3182ce;
+  background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%) !important;
+}
+
+/* Enhanced concept grid for 6 items */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Animation for timed outputs */
+.output-item {
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Special styling for time-based outputs */
+.output-list .output-item:contains("Tick"),
+.output-list .output-item:contains("Timer") {
+  border-left: 3px solid #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+  padding-left: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .concept-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .comparison-table {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .comparison-header {
+    display: none;
+  }
+  
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .comparison-row > div {
+    border: none;
+    padding: 0.5rem;
+    background: transparent;
+    text-align: left;
+    justify-content: flex-start;
+  }
+}

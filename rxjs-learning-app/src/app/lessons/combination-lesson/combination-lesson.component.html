@@ -1,0 +1,388 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>🤝 Combination Operators</h1>
+    <p class="lesson-subtitle">Phase 2: Intermediate - Combine Multiple Observable Streams</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Master modern combination operators with "With" suffix</li>
+      <li>Understand different combination strategies and their use cases</li>
+      <li>Learn when to use combineLatestWith vs forkJoin vs mergeWith</li>
+      <li>Apply combination operators to real-world scenarios</li>
+      <li>Avoid deprecated combination operators</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Modern Combination Operators</h2>
+    <div class="concept-grid">
+      <div class="concept-card combine-card">
+        <h3>🔄 combineLatestWith</h3>
+        <p><strong>Strategy:</strong> Latest values from all sources</p>
+        <p><strong>Use case:</strong> Form validation, real-time dashboards</p>
+        <code>obs1.pipe(combineLatestWith(obs2))</code>
+      </div>
+      <div class="concept-card forkjoin-card">
+        <h3>🍴 forkJoin</h3>
+        <p><strong>Strategy:</strong> Wait for all to complete</p>
+        <p><strong>Use case:</strong> Parallel HTTP requests, batch operations</p>
+        <code>forkJoin([obs1, obs2, obs3])</code>
+      </div>
+      <div class="concept-card merge-card">
+        <h3>🔀 mergeWith</h3>
+        <p><strong>Strategy:</strong> Merge streams as they emit</p>
+        <p><strong>Use case:</strong> Event streams, notifications</p>
+        <code>obs1.pipe(mergeWith(obs2))</code>
+      </div>
+      <div class="concept-card zip-card">
+        <h3>🤐 zipWith</h3>
+        <p><strong>Strategy:</strong> Pair values by emission order</p>
+        <p><strong>Use case:</strong> Coordinated data processing</p>
+        <code>obs1.pipe(zipWith(obs2))</code>
+      </div>
+      <div class="concept-card race-card">
+        <h3>🏁 raceWith</h3>
+        <p><strong>Strategy:</strong> First to emit wins</p>
+        <p><strong>Use case:</strong> Timeout scenarios, fallback data</p>
+        <code>obs1.pipe(raceWith(obs2))</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="behavior-comparison">
+    <h2>📊 Behavior Comparison</h2>
+    <div class="behavior-grid">
+      <div class="behavior-item">
+        <h4>combineLatestWith</h4>
+        <div class="marble-diagram">
+          <div class="source">A: --1--2--3</div>
+          <div class="source">B: ----a----b</div>
+          <div class="result">R: ----[2,a]-[3,a]-[3,b]</div>
+        </div>
+        <p>Emits when any source emits</p>
+      </div>
+      <div class="behavior-item">
+        <h4>forkJoin</h4>
+        <div class="marble-diagram">
+          <div class="source">A: --1--2--3|</div>
+          <div class="source">B: ----a----b|</div>
+          <div class="result">R: -----------[3,b]|</div>
+        </div>
+        <p>Waits for all to complete</p>
+      </div>
+      <div class="behavior-item">
+        <h4>zipWith</h4>
+        <div class="marble-diagram">
+          <div class="source">A: --1--2--3</div>
+          <div class="source">B: ----a----b</div>
+          <div class="result">R: ----[1,a]--[2,b]</div>
+        </div>
+        <p>Pairs by emission order</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: combineLatestWith -->
+    <div class="example-card">
+      <h3>Example 1: combineLatestWith - Form Validation</h3>
+      <p>Perfect for reactive forms where validation depends on multiple fields.</p>
+      
+      <button class="example-button combine-button" (click)="runCombineLatestExample()">
+        🔄 Run combineLatestWith Example
+      </button>
+      
+      <div class="output-section" *ngIf="combineLatestOutput().length > 0">
+        <h4>📝 Form Validation Flow:</h4>
+        <div class="output-list combine-output">
+          <div *ngFor="let output of combineLatestOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const formValidation$ = username$.pipe(
+  combineLatestWith(email$, password$),
+  map(([username, email, password]) =&gt; (&#123;
+    username, email, password,
+    isValid: username.length &gt;= 3 && 
+             email.includes('@') && 
+             password.length &gt;= 6
+  &#125;))
+);
+
+// Emits whenever any field changes
+formValidation$.subscribe(form =&gt; validateForm(form));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: forkJoin -->
+    <div class="example-card">
+      <h3>Example 2: forkJoin - Parallel HTTP Requests</h3>
+      <p>Like Promise.all() for Observables - wait for all requests to complete.</p>
+      
+      <button class="example-button forkjoin-button" (click)="runForkJoinExample()">
+        🍴 Run forkJoin Example
+      </button>
+      
+      <div class="output-section" *ngIf="forkJoinOutput().length > 0">
+        <h4>🌐 Parallel Requests:</h4>
+        <div class="output-list forkjoin-output">
+          <div *ngFor="let output of forkJoinOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const allUserData$ = forkJoin(&#123;
+  profile: getUserProfile(),
+  posts: getUserPosts(),
+  settings: getUserSettings()
+&#125;);
+
+// Only emits when ALL requests complete
+allUserData$.subscribe(data =&gt; &#123;
+  console.log('All data loaded:', data);
+  // data.profile, data.posts, data.settings all available
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: mergeWith -->
+    <div class="example-card">
+      <h3>Example 3: mergeWith - Event Streams</h3>
+      <p>Merge multiple event streams into a single stream for unified handling.</p>
+      
+      <button class="example-button merge-button" (click)="runMergeWithExample()">
+        🔀 Run mergeWith Example
+      </button>
+      
+      <div class="output-section" *ngIf="mergeWithOutput().length > 0">
+        <h4>📨 Merged Events:</h4>
+        <div class="output-list merge-output">
+          <div *ngFor="let output of mergeWithOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const allEvents$ = buttonClicks$.pipe(
+  mergeWith(keyPresses$, notifications$)
+);
+
+// Emits events as they arrive from any source
+allEvents$.subscribe(event =&gt; &#123;
+  console.log(`Event: $&#123;event.type&#125; - $&#123;event.data&#125;`);
+  handleEvent(event);
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: zipWith -->
+    <div class="example-card">
+      <h3>Example 4: zipWith - Coordinate Data Processing</h3>
+      <p>Pair values from multiple sources by their emission order.</p>
+      
+      <button class="example-button zip-button" (click)="runZipWithExample()">
+        🤐 Run zipWith Example
+      </button>
+      
+      <div class="output-section" *ngIf="zipWithOutput().length > 0">
+        <h4>👥 Coordinated Data:</h4>
+        <div class="output-list zip-output">
+          <div *ngFor="let output of zipWithOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const users$ = names$.pipe(
+  zipWith(ages$, cities$),
+  map(([name, age, city]) =&gt; (&#123; name, age, city &#125;))
+);
+
+// Waits for all sources to emit before creating pairs
+// names[0] + ages[0] + cities[0] = first user
+users$.subscribe(user =&gt; console.log(user));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: raceWith -->
+    <div class="example-card">
+      <h3>Example 5: raceWith - First to Respond Wins</h3>
+      <p>Great for implementing timeouts and fallback data sources.</p>
+      
+      <button class="example-button race-button" (click)="runRaceWithExample()">
+        🏁 Run raceWith Example
+      </button>
+      
+      <div class="output-section" *ngIf="raceWithOutput().length > 0">
+        <h4>🏆 Race Results:</h4>
+        <div class="output-list race-output">
+          <div *ngFor="let output of raceWithOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const fastestData$ = primaryAPI$.pipe(
+  raceWith(backupAPI$, cacheData$)
+);
+
+// Only the first Observable to emit wins
+// Others are automatically unsubscribed
+fastestData$.subscribe(data =&gt; &#123;
+  console.log('Fastest response:', data);
+&#125;);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 6: Real-world Dashboard -->
+    <div class="example-card">
+      <h3>Example 6: Real-world Dashboard</h3>
+      <p>Combine multiple data sources for a live dashboard with different update frequencies.</p>
+      
+      <button class="example-button dashboard-button" (click)="runRealWorldExample()">
+        📈 Run Dashboard Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const dashboardData$ = userStats$.pipe(
+  combineLatestWith(salesData$, systemHealth$),
+  map(([users, sales, system]) =&gt; (&#123;
+    users, sales, system,
+    lastUpdated: new Date().toLocaleTimeString()
+  &#125;))
+);
+
+// Updates whenever any data source emits new data
+dashboardData$.subscribe(dashboard =&gt; updateUI(dashboard));</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-guide">
+    <h2>🤔 Which Operator Should I Use?</h2>
+    <div class="decision-cards">
+      <div class="decision-card">
+        <h4>🔄 Use combineLatestWith when:</h4>
+        <ul>
+          <li>You need the latest value from multiple sources</li>
+          <li>Sources emit at different rates</li>
+          <li>Form validation scenarios</li>
+          <li>Real-time dashboards</li>
+        </ul>
+      </div>
+      <div class="decision-card">
+        <h4>🍴 Use forkJoin when:</h4>
+        <ul>
+          <li>You need to wait for all operations to complete</li>
+          <li>Parallel HTTP requests</li>
+          <li>Batch operations</li>
+          <li>Like Promise.all() behavior</li>
+        </ul>
+      </div>
+      <div class="decision-card">
+        <h4>🔀 Use mergeWith when:</h4>
+        <ul>
+          <li>You want to merge event streams</li>
+          <li>Order doesn't matter</li>
+          <li>Notifications from multiple sources</li>
+          <li>First-come, first-served processing</li>
+        </ul>
+      </div>
+      <div class="decision-card">
+        <h4>🤐 Use zipWith when:</h4>
+        <ul>
+          <li>You need to pair values by index</li>
+          <li>Coordinated data processing</li>
+          <li>Sources should emit synchronously</li>
+          <li>Mathematical operations on streams</li>
+        </ul>
+      </div>
+      <div class="decision-card">
+        <h4>🏁 Use raceWith when:</h4>
+        <ul>
+          <li>You want the fastest response</li>
+          <li>Implementing timeouts</li>
+          <li>Fallback data sources</li>
+          <li>Performance optimization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="deprecated-warning">
+    <h2>⚠️ Deprecated Operators to Avoid</h2>
+    <div class="deprecated-list">
+      <div class="deprecated-item">
+        <span class="old">❌ combineLatest(obs1, obs2)</span>
+        <span class="arrow">→</span>
+        <span class="new">✅ obs1.pipe(combineLatestWith(obs2))</span>
+      </div>
+      <div class="deprecated-item">
+        <span class="old">❌ merge(obs1, obs2)</span>
+        <span class="arrow">→</span>
+        <span class="new">✅ obs1.pipe(mergeWith(obs2))</span>
+      </div>
+      <div class="deprecated-item">
+        <span class="old">❌ zip(obs1, obs2)</span>
+        <span class="arrow">→</span>
+        <span class="new">✅ obs1.pipe(zipWith(obs2))</span>
+      </div>
+      <div class="deprecated-item">
+        <span class="old">❌ race(obs1, obs2)</span>
+        <span class="arrow">→</span>
+        <span class="new">✅ obs1.pipe(raceWith(obs2))</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🎯 Choose the Right Strategy</h4>
+        <p>Understand the emission behavior of each operator to choose the right one for your use case</p>
+      </div>
+      <div class="practice-item">
+        <h4>🚫 Use Modern Operators</h4>
+        <p>Always use the "With" suffix operators (combineLatestWith, mergeWith, etc.) for better tree-shaking</p>
+      </div>
+      <div class="practice-item">
+        <h4>⚠️ Handle Errors</h4>
+        <p>Use catchError within individual streams to prevent one error from killing the entire combination</p>
+      </div>
+      <div class="practice-item">
+        <h4>🧪 Test Thoroughly</h4>
+        <p>Different combination strategies can produce very different results - test your assumptions</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Error Handling</h3>
+    <p>Now that you can combine streams, let's learn how to handle errors gracefully with <code>catchError</code>, <code>retry</code>, and modern error handling patterns!</p>
+  </div>
+</div>

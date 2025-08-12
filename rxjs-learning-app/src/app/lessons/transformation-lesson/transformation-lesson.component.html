@@ -1,0 +1,358 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>🔄 Transformation Operators</h1>
+    <p class="lesson-subtitle">Phase 2: Intermediate - Master Higher-Order Mapping</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Master the four essential transformation operators</li>
+      <li>Understand when to use switchMap, mergeMap, concatMap, and exhaustMap</li>
+      <li>Learn the differences between concurrent and sequential processing</li>
+      <li>Apply transformation operators to real-world scenarios</li>
+      <li>Avoid common pitfalls and anti-patterns</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Transformation Operators</h2>
+    <div class="concept-grid">
+      <div class="concept-card switch-card">
+        <h3>🔄 switchMap</h3>
+        <p><strong>Strategy:</strong> Cancel previous, switch to new</p>
+        <p><strong>Use case:</strong> Search, navigation, latest wins</p>
+        <code>switchMap(x =&gt; apiCall(x))</code>
+      </div>
+      <div class="concept-card merge-card">
+        <h3>🔀 mergeMap</h3>
+        <p><strong>Strategy:</strong> Handle multiple concurrent operations</p>
+        <p><strong>Use case:</strong> File uploads, parallel processing</p>
+        <code>mergeMap(x =&gt; upload(x))</code>
+      </div>
+      <div class="concept-card concat-card">
+        <h3>📋 concatMap</h3>
+        <p><strong>Strategy:</strong> Sequential, one at a time</p>
+        <p><strong>Use case:</strong> Ordered operations, dependencies</p>
+        <code>concatMap(x =&gt; process(x))</code>
+      </div>
+      <div class="concept-card exhaust-card">
+        <h3>🚫 exhaustMap</h3>
+        <p><strong>Strategy:</strong> Ignore new until current completes</p>
+        <p><strong>Use case:</strong> Login, save, prevent spam</p>
+        <code>exhaustMap(x =&gt; save(x))</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="visual-guide">
+    <h2>📊 Visual Behavior Guide</h2>
+    <div class="behavior-grid">
+      <div class="behavior-card">
+        <h4>switchMap</h4>
+        <div class="marble-diagram">
+          <div class="source-line">Source: A---B---C</div>
+          <div class="inner-line">Inner:  --a1 --b1 --c1</div>
+          <div class="result-line">Result:    --b1 --c1</div>
+        </div>
+        <p>❌ a1 cancelled when B arrives</p>
+      </div>
+      <div class="behavior-card">
+        <h4>mergeMap</h4>
+        <div class="marble-diagram">
+          <div class="source-line">Source: A---B---C</div>
+          <div class="inner-line">Inner:  --a1 --b1 --c1</div>
+          <div class="result-line">Result: --a1-b1-c1</div>
+        </div>
+        <p>✅ All inner Observables active</p>
+      </div>
+      <div class="behavior-card">
+        <h4>concatMap</h4>
+        <div class="marble-diagram">
+          <div class="source-line">Source: A---B---C</div>
+          <div class="inner-line">Inner:  --a1---b1---c1</div>
+          <div class="result-line">Result: --a1---b1---c1</div>
+        </div>
+        <p>⏳ Waits for each to complete</p>
+      </div>
+      <div class="behavior-card">
+        <h4>exhaustMap</h4>
+        <div class="marble-diagram">
+          <div class="source-line">Source: A---B---C</div>
+          <div class="inner-line">Inner:  --a1     --c1</div>
+          <div class="result-line">Result: --a1     --c1</div>
+        </div>
+        <p>🚫 B ignored while a1 active</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: switchMap -->
+    <div class="example-card">
+      <h3>Example 1: switchMap - Search Autocomplete</h3>
+      <p>Perfect for search scenarios where you want the latest results and can cancel previous requests.</p>
+      
+      <button class="example-button switch-button" (click)="runSwitchMapExample()">
+        🔄 Run switchMap Example
+      </button>
+      
+      <div class="output-section" *ngIf="switchMapOutput().length > 0">
+        <h4>🔍 Search Flow:</h4>
+        <div class="output-list switch-output">
+          <div *ngFor="let output of switchMapOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const searchResults$ = searchInput$.pipe(
+  debounceTime(300),
+  distinctUntilChanged(),
+  switchMap(term =&gt; searchAPI(term)) // Cancel previous search
+);
+
+// Only the latest search completes
+searchResults$.subscribe(results =&gt; displayResults(results));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: mergeMap -->
+    <div class="example-card">
+      <h3>Example 2: mergeMap - Concurrent File Uploads</h3>
+      <p>Ideal for independent operations that can run concurrently without interfering with each other.</p>
+      
+      <button class="example-button merge-button" (click)="runMergeMapExample()">
+        🔀 Run mergeMap Example
+      </button>
+      
+      <div class="output-section" *ngIf="mergeMapOutput().length > 0">
+        <h4>📤 Upload Progress:</h4>
+        <div class="output-list merge-output">
+          <div *ngFor="let output of mergeMapOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const uploadResults$ = files$.pipe(
+  mergeMap(file =&gt; uploadFile(file)) // All uploads concurrent
+);
+
+// All files upload simultaneously
+uploadResults$.subscribe(result =&gt; console.log(result));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: concatMap -->
+    <div class="example-card">
+      <h3>Example 3: concatMap - Sequential Database Operations</h3>
+      <p>Perfect for operations that must happen in a specific order or depend on previous results.</p>
+      
+      <button class="example-button concat-button" (click)="runConcatMapExample()">
+        📋 Run concatMap Example
+      </button>
+      
+      <div class="output-section" *ngIf="concatMapOutput().length > 0">
+        <h4>🗄️ Database Operations:</h4>
+        <div class="output-list concat-output">
+          <div *ngFor="let output of concatMapOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const dbOperations$ = operations$.pipe(
+  concatMap(op =&gt; performDBOperation(op)) // One at a time
+);
+
+// Operations execute in order: CREATE → ASSIGN → EMAIL → LOG
+dbOperations$.subscribe(result =&gt; console.log(result));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: exhaustMap -->
+    <div class="example-card">
+      <h3>Example 4: exhaustMap - Prevent Duplicate Login Attempts</h3>
+      <p>Excellent for preventing spam clicks and duplicate operations while one is already in progress.</p>
+      
+      <button class="example-button exhaust-button" (click)="runExhaustMapExample()">
+        🚫 Run exhaustMap Example
+      </button>
+      
+      <div class="output-section" *ngIf="exhaustMapOutput().length > 0">
+        <h4>🔐 Login Attempts:</h4>
+        <div class="output-list exhaust-output">
+          <div *ngFor="let output of exhaustMapOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const loginResult$ = loginButton$.pipe(
+  exhaustMap(() =&gt; loginAPI()) // Ignore clicks during login
+);
+
+// Only first click processes, others ignored until complete
+loginResult$.subscribe(result =&gt; handleLogin(result));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Side-by-Side Comparison -->
+    <div class="example-card">
+      <h3>Example 5: Side-by-Side Behavior Comparison</h3>
+      <p>See how different operators handle the same source Observable and inner Observables.</p>
+      
+      <button class="example-button comparison-button" (click)="runComparisonExample()">
+        📊 Run Comparison
+      </button>
+      
+      <div class="output-section" *ngIf="comparisonOutput().length > 0">
+        <h4>📊 Operator Comparison:</h4>
+        <div class="output-list comparison-output">
+          <div *ngFor="let output of comparisonOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Test Setup:</h4>
+        <pre><code>// Source: A--B--C (500ms apart)
+// Inner Observable: takes 1200ms to complete
+
+// switchMap: Only C-result (A and B cancelled)
+// mergeMap: A-result, B-result, C-result (all complete)
+// concatMap: A-result, then B-result, then C-result (sequential)
+// exhaustMap: A-result, then C-result (B ignored)</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 6: Real-world Scenarios -->
+    <div class="example-card">
+      <h3>Example 6: Real-world HTTP Request Patterns</h3>
+      <p>Learn which operator to choose for common HTTP request scenarios.</p>
+      
+      <button class="example-button real-world-button" (click)="runRealWorldExample()">
+        🌍 Run Real-world Examples
+      </button>
+      
+      <div class="scenarios">
+        <div class="scenario">
+          <h5>🔍 Search Autocomplete</h5>
+          <p><strong>Use switchMap:</strong> Cancel previous searches, show latest results</p>
+        </div>
+        <div class="scenario">
+          <h5>📤 File Uploads</h5>
+          <p><strong>Use mergeMap:</strong> Upload multiple files concurrently</p>
+        </div>
+        <div class="scenario">
+          <h5>📋 Sequential API Calls</h5>
+          <p><strong>Use concatMap:</strong> Each call depends on the previous result</p>
+        </div>
+        <div class="scenario">
+          <h5>💾 Save Button</h5>
+          <p><strong>Use exhaustMap:</strong> Prevent duplicate save requests</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="decision-tree">
+    <h2>🌳 Decision Tree: Which Operator to Use?</h2>
+    <div class="tree-container">
+      <div class="decision-node root">
+        <p>Do you need the latest result only?</p>
+        <div class="branches">
+          <div class="branch yes">
+            <span>YES</span>
+            <div class="decision-node">
+              <p><strong>switchMap</strong></p>
+              <p>Cancel previous, use latest</p>
+            </div>
+          </div>
+          <div class="branch no">
+            <span>NO</span>
+            <div class="decision-node">
+              <p>Can operations run concurrently?</p>
+              <div class="branches">
+                <div class="branch yes">
+                  <span>YES</span>
+                  <div class="decision-node">
+                    <p><strong>mergeMap</strong></p>
+                    <p>All operations concurrent</p>
+                  </div>
+                </div>
+                <div class="branch no">
+                  <span>NO</span>
+                  <div class="decision-node">
+                    <p>Should new requests be ignored?</p>
+                    <div class="branches">
+                      <div class="branch yes">
+                        <span>YES</span>
+                        <div class="decision-node">
+                          <p><strong>exhaustMap</strong></p>
+                          <p>Ignore while busy</p>
+                        </div>
+                      </div>
+                      <div class="branch no">
+                        <span>NO</span>
+                        <div class="decision-node">
+                          <p><strong>concatMap</strong></p>
+                          <p>Sequential processing</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🎯 Choose the Right Operator</h4>
+        <p>switchMap for latest, mergeMap for concurrent, concatMap for sequential, exhaustMap for ignoring</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔍 Consider Performance</h4>
+        <p>switchMap and exhaustMap can improve performance by reducing unnecessary operations</p>
+      </div>
+      <div class="practice-item">
+        <h4>⚠️ Handle Errors</h4>
+        <p>Use catchError within the inner Observable to prevent the outer stream from terminating</p>
+      </div>
+      <div class="practice-item">
+        <h4>🧪 Test Thoroughly</h4>
+        <p>Different operators can produce very different results - test your assumptions</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Filtering Operators</h3>
+    <p>Now that you've mastered transformation, let's learn about filtering operators like <code>debounceTime</code>, <code>distinctUntilChanged</code>, and <code>takeUntil</code>!</p>
+  </div>
+</div>

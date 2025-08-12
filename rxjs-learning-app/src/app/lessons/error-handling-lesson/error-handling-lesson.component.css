@@ -1,0 +1,306 @@
+/* Import base lesson styles */
+@import '../lesson-base.css';
+
+/* Error handling specific button colors */
+.catch-button {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.catch-button:hover {
+  box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+}
+
+.retry-button {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.retry-button:hover {
+  box-shadow: 0 4px 8px rgba(237, 137, 54, 0.3);
+}
+
+.finalize-button {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+}
+
+.finalize-button:hover {
+  box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+}
+
+.strategies-button {
+  background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+.strategies-button:hover {
+  box-shadow: 0 4px 8px rgba(159, 122, 234, 0.3);
+}
+
+.realworld-button {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+}
+
+.realworld-button:hover {
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.3);
+}
+
+/* Operator-specific concept cards */
+.catch-card {
+  border-left: 4px solid #48bb78;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.retry-card {
+  border-left: 4px solid #ed8936;
+  background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%);
+}
+
+.finalize-card {
+  border-left: 4px solid #4299e1;
+  background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+}
+
+.retrywhen-card {
+  border-left: 4px solid #9f7aea;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%);
+}
+
+/* Error Types Section */
+.error-types {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #fef5e7;
+  border-radius: 8px;
+  border-left: 4px solid #ed8936;
+}
+
+.error-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.error-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.network-error {
+  border-left: 4px solid #4299e1;
+}
+
+.auth-error {
+  border-left: 4px solid #e53e3e;
+}
+
+.client-error {
+  border-left: 4px solid #ed8936;
+}
+
+.server-error {
+  border-left: 4px solid #9f7aea;
+}
+
+.error-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #2b6cb0;
+  font-size: 1.1rem;
+}
+
+.error-card p {
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.error-card ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.error-card li {
+  margin: 0.25rem 0;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+/* Output styling for different error handling patterns */
+.catch-output .output-item:contains("🌐") {
+  border-left: 3px solid #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.catch-output .output-item:contains("❌") {
+  border-left: 3px solid #e53e3e;
+  background: rgba(229, 62, 62, 0.1);
+  font-weight: 600;
+}
+
+.catch-output .output-item:contains("🔄") {
+  border-left: 3px solid #ed8936;
+  background: rgba(237, 137, 54, 0.1);
+}
+
+.catch-output .output-item:contains("✅") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.retry-output .output-item:contains("🔄") {
+  border-left: 3px solid #ed8936;
+  background: rgba(237, 137, 54, 0.1);
+}
+
+.retry-output .output-item:contains("✅") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+  font-weight: 600;
+}
+
+.retry-output .output-item:contains("❌") {
+  border-left: 3px solid #e53e3e;
+  background: rgba(229, 62, 62, 0.1);
+  font-weight: 600;
+}
+
+.finalize-output .output-item:contains("🚀") {
+  border-left: 3px solid #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.finalize-output .output-item:contains("🏁") {
+  border-left: 3px solid #9f7aea;
+  background: rgba(159, 122, 234, 0.1);
+  font-weight: 600;
+}
+
+.finalize-output .output-item:contains("✅") {
+  border-left: 3px solid #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.finalize-output .output-item:contains("❌") {
+  border-left: 3px solid #e53e3e;
+  background: rgba(229, 62, 62, 0.1);
+}
+
+.strategies-output .output-item {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+}
+
+.strategies-output .output-item:contains("⏳") {
+  background: rgba(237, 137, 54, 0.1);
+  border-left: 3px solid #ed8936;
+}
+
+.strategies-output .output-item:contains("⏰") {
+  background: rgba(66, 153, 225, 0.1);
+  border-left: 3px solid #4299e1;
+}
+
+.strategies-output .output-item:contains("✅") {
+  background: rgba(72, 187, 120, 0.1);
+  border-left: 3px solid #48bb78;
+  font-weight: 600;
+}
+
+.strategies-output .output-item:contains("❌") {
+  background: rgba(229, 62, 62, 0.1);
+  border-left: 3px solid #e53e3e;
+}
+
+.realworld-output .output-item {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  border-radius: 4px;
+}
+
+.realworld-output .output-item:contains("🌐") {
+  background: rgba(66, 153, 225, 0.1);
+  border-left: 3px solid #4299e1;
+}
+
+.realworld-output .output-item:contains("❌") {
+  background: rgba(229, 62, 62, 0.1);
+  border-left: 3px solid #e53e3e;
+}
+
+.realworld-output .output-item:contains("🔄") {
+  background: rgba(237, 137, 54, 0.1);
+  border-left: 3px solid #ed8936;
+}
+
+.realworld-output .output-item:contains("🔐") {
+  background: rgba(159, 122, 234, 0.1);
+  border-left: 3px solid #9f7aea;
+}
+
+.realworld-output .output-item:contains("✅") {
+  background: rgba(72, 187, 120, 0.1);
+  border-left: 3px solid #48bb78;
+}
+
+.realworld-output .output-item:contains("🏁") {
+  background: rgba(113, 128, 150, 0.1);
+  border-left: 3px solid #718096;
+}
+
+/* Enhanced animations for error states */
+.output-item {
+  animation: slideInError 0.3s ease-out;
+}
+
+@keyframes slideInError {
+  from {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Error state indicators */
+.output-item:contains("❌") {
+  animation: errorPulse 0.5s ease-in-out;
+}
+
+@keyframes errorPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .error-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .error-card {
+    padding: 1rem;
+  }
+}
+
+/* Code highlighting for error handling */
+.code-example pre code {
+  line-height: 1.6;
+}
+
+.code-example pre code .error-operator {
+  color: #feb2b2;
+  font-weight: bold;
+}
+
+.code-example pre code .success {
+  color: #68d391;
+}
+
+.code-example pre code .error {
+  color: #feb2b2;
+}

@@ -1,0 +1,258 @@
+/* Import base lesson styles */
+@import '../lesson-base.css';
+
+/* Operator-specific button colors */
+.map-button {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+}
+
+.map-button:hover {
+  box-shadow: 0 4px 8px rgba(72, 187, 120, 0.3);
+}
+
+.filter-button {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+}
+
+.filter-button:hover {
+  box-shadow: 0 4px 8px rgba(237, 137, 54, 0.3);
+}
+
+.tap-button {
+  background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+}
+
+.tap-button:hover {
+  box-shadow: 0 4px 8px rgba(159, 122, 234, 0.3);
+}
+
+.chain-button {
+  background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+}
+
+.chain-button:hover {
+  box-shadow: 0 4px 8px rgba(66, 153, 225, 0.3);
+}
+
+.real-world-button {
+  background: linear-gradient(135deg, #38b2ac 0%, #319795 100%);
+}
+
+.real-world-button:hover {
+  box-shadow: 0 4px 8px rgba(56, 178, 172, 0.3);
+}
+
+.debug-button {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+}
+
+.debug-button:hover {
+  box-shadow: 0 4px 8px rgba(229, 62, 62, 0.3);
+}
+
+/* Operator-specific concept cards */
+.map-card {
+  border-left: 4px solid #48bb78;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.filter-card {
+  border-left: 4px solid #ed8936;
+  background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%);
+}
+
+.tap-card {
+  border-left: 4px solid #9f7aea;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%);
+}
+
+.concept-card code {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  display: block;
+  margin-top: 0.5rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Chained output styling */
+.chained-output {
+  max-height: 300px;
+}
+
+.chained-output .output-item {
+  padding: 0.5rem 0;
+  border-left: 3px solid transparent;
+}
+
+.chained-output .output-item:nth-child(4n+1) {
+  border-left-color: #48bb78;
+  background: rgba(72, 187, 120, 0.1);
+}
+
+.chained-output .output-item:nth-child(4n+2) {
+  border-left-color: #ed8936;
+  background: rgba(237, 137, 54, 0.1);
+}
+
+.chained-output .output-item:nth-child(4n+3) {
+  border-left-color: #4299e1;
+  background: rgba(66, 153, 225, 0.1);
+}
+
+.chained-output .output-item:nth-child(4n) {
+  border-left-color: #9f7aea;
+  background: rgba(159, 122, 234, 0.1);
+}
+
+/* Operator Comparison Table */
+.operator-comparison {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.comparison-table {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.comparison-header {
+  display: contents;
+  font-weight: 600;
+  color: #2b6cb0;
+}
+
+.comparison-header > div {
+  padding: 0.75rem;
+  background: #edf2f7;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.comparison-row {
+  display: contents;
+}
+
+.comparison-row > div {
+  padding: 0.75rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.operator-name {
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+}
+
+.map-highlight {
+  color: #38a169;
+  background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%) !important;
+}
+
+.filter-highlight {
+  color: #dd6b20;
+  background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%) !important;
+}
+
+.tap-highlight {
+  color: #805ad5;
+  background: linear-gradient(135deg, #faf5ff 0%, #d6bcfa 100%) !important;
+}
+
+.changes-yes {
+  color: #38a169;
+  font-weight: 600;
+}
+
+.changes-no {
+  color: #e53e3e;
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .comparison-table {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .comparison-header {
+    display: none;
+  }
+  
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .comparison-row > div {
+    border: none;
+    padding: 0.5rem;
+    background: transparent;
+    text-align: left;
+    justify-content: flex-start;
+  }
+  
+  .comparison-row > div:first-child {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .comparison-row > div:before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #4a5568;
+    margin-right: 0.5rem;
+  }
+}
+
+/* Animation for output items */
+.output-item {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Enhanced code examples */
+.code-example pre {
+  position: relative;
+  overflow-x: auto;
+}
+
+.code-example pre:before {
+  content: '💻';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.2rem;
+  opacity: 0.7;
+}

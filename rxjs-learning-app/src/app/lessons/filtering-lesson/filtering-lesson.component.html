@@ -1,0 +1,346 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>🔍 Filtering Operators</h1>
+    <p class="lesson-subtitle">Phase 2: Intermediate - Control Data Flow and Timing</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Master essential filtering operators for data flow control</li>
+      <li>Understand timing operators: debounceTime, throttleTime</li>
+      <li>Learn the takeUntil pattern for subscription management</li>
+      <li>Apply distinctUntilChanged to prevent duplicate operations</li>
+      <li>Combine multiple filtering operators effectively</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Essential Filtering Operators</h2>
+    <div class="concept-grid">
+      <div class="concept-card debounce-card">
+        <h3>⏳ debounceTime</h3>
+        <p><strong>Strategy:</strong> Wait for pause in emissions</p>
+        <p><strong>Use case:</strong> Search input, form validation</p>
+        <code>debounceTime(300)</code>
+      </div>
+      <div class="concept-card distinct-card">
+        <h3>🔄 distinctUntilChanged</h3>
+        <p><strong>Strategy:</strong> Only emit when value changes</p>
+        <p><strong>Use case:</strong> Prevent duplicate API calls</p>
+        <code>distinctUntilChanged()</code>
+      </div>
+      <div class="concept-card takeuntil-card">
+        <h3>🛑 takeUntil</h3>
+        <p><strong>Strategy:</strong> Complete when another Observable emits</p>
+        <p><strong>Use case:</strong> Component cleanup, cancellation</p>
+        <code>takeUntil(destroy$)</code>
+      </div>
+      <div class="concept-card throttle-card">
+        <h3>🚫 throttleTime</h3>
+        <p><strong>Strategy:</strong> Limit emission rate</p>
+        <p><strong>Use case:</strong> Button clicks, scroll events</p>
+        <code>throttleTime(1000)</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="timing-comparison">
+    <h2>⏰ Timing Operators Comparison</h2>
+    <div class="timing-grid">
+      <div class="timing-card debounce-timing">
+        <h4>debounceTime</h4>
+        <div class="timing-diagram">
+          <div class="events">Events: A-B-C----D</div>
+          <div class="result">Result: ------C--D</div>
+        </div>
+        <p>Waits for silence, emits last value</p>
+      </div>
+      <div class="timing-card throttle-timing">
+        <h4>throttleTime</h4>
+        <div class="timing-diagram">
+          <div class="events">Events: A-B-C----D</div>
+          <div class="result">Result: A--------D</div>
+        </div>
+        <p>Emits first, ignores until period ends</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: debounceTime -->
+    <div class="example-card">
+      <h3>Example 1: debounceTime - Search Input Optimization</h3>
+      <p>Perfect for search inputs where you want to wait for the user to stop typing before making API calls.</p>
+      
+      <button class="example-button debounce-button" (click)="runDebounceExample()">
+        ⏳ Run debounceTime Example
+      </button>
+      
+      <div class="output-section" *ngIf="debounceOutput().length > 0">
+        <h4>⌨️ Search Input Flow:</h4>
+        <div class="output-list debounce-output">
+          <div *ngFor="let output of debounceOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const searchResults$ = searchInput$.pipe(
+  debounceTime(500),           // Wait 500ms after user stops typing
+  distinctUntilChanged(),      // Only if search term changed
+  switchMap(term =&gt; searchAPI(term))
+);
+
+// Only searches when user pauses typing
+searchResults$.subscribe(results =&gt; displayResults(results));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: distinctUntilChanged -->
+    <div class="example-card">
+      <h3>Example 2: distinctUntilChanged - Prevent Duplicate API Calls</h3>
+      <p>Avoid unnecessary API calls by only emitting when the value actually changes.</p>
+      
+      <button class="example-button distinct-button" (click)="runDistinctExample()">
+        🔄 Run distinctUntilChanged Example
+      </button>
+      
+      <div class="output-section" *ngIf="distinctOutput().length > 0">
+        <h4>📊 API Call Comparison:</h4>
+        <div class="output-list distinct-output">
+          <div *ngFor="let output of distinctOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// Without distinctUntilChanged: 8 API calls
+userSelections$ = of('apple', 'apple', 'banana', 'banana', 'cherry');
+
+// With distinctUntilChanged: 3 API calls
+const optimizedSelections$ = userSelections$.pipe(
+  distinctUntilChanged(),
+  switchMap(selection =&gt; fetchData(selection))
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: takeUntil -->
+    <div class="example-card">
+      <h3>Example 3: takeUntil - Component Cleanup Pattern</h3>
+      <p>Essential pattern for preventing memory leaks in Angular components.</p>
+      
+      <button class="example-button takeuntil-button" (click)="runTakeUntilExample()">
+        🛑 Run takeUntil Example
+      </button>
+      
+      <div class="output-section" *ngIf="takeUntilOutput().length > 0">
+        <h4>🔄 Task Management:</h4>
+        <div class="output-list takeuntil-output">
+          <div *ngFor="let output of takeUntilOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>export class MyComponent implements OnInit, OnDestroy &#123;
+  private destroy$ = new Subject&lt;void&gt;();
+
+  ngOnInit() &#123;
+    // All subscriptions automatically cleaned up
+    this.dataService.getData().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(data =&gt; this.handleData(data));
+  &#125;
+
+  ngOnDestroy() &#123;
+    this.destroy$.next();
+    this.destroy$.complete();
+  &#125;
+&#125;</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: throttleTime vs debounceTime -->
+    <div class="example-card">
+      <h3>Example 4: throttleTime vs debounceTime - Button Clicks</h3>
+      <p>See the difference between throttling (rate limiting) and debouncing (waiting for pause).</p>
+      
+      <button class="example-button throttle-button" (click)="runThrottleExample()">
+        🚫 Run Throttle Comparison
+      </button>
+      
+      <div class="output-section" *ngIf="throttleOutput().length > 0">
+        <h4>🖱️ Click Handling Comparison:</h4>
+        <div class="output-list throttle-output">
+          <div *ngFor="let output of throttleOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>// throttleTime: Emits first click, ignores others for 1 second
+const throttledClicks$ = buttonClicks$.pipe(
+  throttleTime(1000)
+);
+
+// debounceTime: Waits 1 second after last click, then emits
+const debouncedClicks$ = buttonClicks$.pipe(
+  debounceTime(1000)
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Combined Filtering -->
+    <div class="example-card">
+      <h3>Example 5: Combined Filtering - Real-world Search</h3>
+      <p>See how multiple filtering operators work together in a production-ready search implementation.</p>
+      
+      <button class="example-button combined-button" (click)="runCombinedExample()">
+        🔍 Run Combined Filtering
+      </button>
+      
+      <div class="output-section" *ngIf="combinedOutput().length > 0">
+        <h4>🔄 Search Pipeline:</h4>
+        <div class="output-list combined-output">
+          <div *ngFor="let output of combinedOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const searchResults$ = searchInput$.pipe(
+  filter(term =&gt; term.length &gt;= 2),    // Min 2 characters
+  distinctUntilChanged(),              // Only if changed
+  debounceTime(300),                   // Wait for pause
+  take(5),                             // Limit results
+  switchMap(term =&gt; searchAPI(term)),  // Make API call
+  takeUntil(this.destroy$)             // Cleanup
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 6: Performance Impact -->
+    <div class="example-card">
+      <h3>Example 6: Performance Impact</h3>
+      <p>Understand how filtering operators can dramatically improve application performance.</p>
+      
+      <button class="example-button performance-button" (click)="runPerformanceExample()">
+        ⚡ Run Performance Test
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Performance Optimization:</h4>
+        <pre><code>// ✅ EFFICIENT: Filter early, process less data
+const efficientProcessing$ = largeDataset$.pipe(
+  filter(item =&gt; item.category === 'premium'),  // Reduce dataset first
+  filter(item =&gt; item.price &gt; 500),             // Further filtering
+  take(10),                                     // Limit early
+  map(item =&gt; transformItem(item))              // Transform fewer items
+);
+
+// ❌ INEFFICIENT: Transform all, then filter
+const inefficientProcessing$ = largeDataset$.pipe(
+  map(item =&gt; expensiveTransform(item)),        // Transform ALL items
+  filter(item =&gt; item.category === 'premium')   // Filter after transformation
+);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="use-cases">
+    <h2>🎯 When to Use Each Operator</h2>
+    <div class="use-case-grid">
+      <div class="use-case-card">
+        <h4>⏳ debounceTime</h4>
+        <ul>
+          <li>Search input fields</li>
+          <li>Form validation</li>
+          <li>Resize events</li>
+          <li>Auto-save functionality</li>
+        </ul>
+      </div>
+      <div class="use-case-card">
+        <h4>🚫 throttleTime</h4>
+        <ul>
+          <li>Button click protection</li>
+          <li>Scroll event handling</li>
+          <li>Mouse move events</li>
+          <li>API rate limiting</li>
+        </ul>
+      </div>
+      <div class="use-case-card">
+        <h4>🔄 distinctUntilChanged</h4>
+        <ul>
+          <li>State management</li>
+          <li>Preventing duplicate API calls</li>
+          <li>Form field changes</li>
+          <li>Route parameter changes</li>
+        </ul>
+      </div>
+      <div class="use-case-card">
+        <h4>🛑 takeUntil</h4>
+        <ul>
+          <li>Component cleanup</li>
+          <li>Subscription management</li>
+          <li>Timeout implementations</li>
+          <li>Cancellation logic</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Filtering Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🎯 Filter Early</h4>
+        <p>Apply filtering operators as early as possible in the pipeline to reduce processing overhead</p>
+      </div>
+      <div class="practice-item">
+        <h4>🛑 Always Use takeUntil</h4>
+        <p>Use takeUntil with a destroy subject in Angular components to prevent memory leaks</p>
+      </div>
+      <div class="practice-item">
+        <h4>⏰ Choose the Right Timing Operator</h4>
+        <p>Use debounceTime for user input, throttleTime for high-frequency events</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔄 Combine Operators Wisely</h4>
+        <p>Combine distinctUntilChanged with debounceTime for optimal search implementations</p>
+      </div>
+      <div class="practice-item">
+        <h4>📊 Monitor Performance</h4>
+        <p>Use browser dev tools to measure the impact of filtering on your application performance</p>
+      </div>
+      <div class="practice-item">
+        <h4>🧪 Test Edge Cases</h4>
+        <p>Test rapid user interactions and edge cases to ensure your filtering works correctly</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Combination Operators</h3>
+    <p>Now that you've mastered filtering, let's learn about combination operators like <code>combineLatestWith</code>, <code>mergeWith</code>, and <code>forkJoin</code>!</p>
+  </div>
+</div>

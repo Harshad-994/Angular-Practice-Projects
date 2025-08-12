@@ -1,0 +1,291 @@
+<div class="lesson-container">
+  <div class="lesson-header">
+    <h1>🔧 Basic Operators</h1>
+    <p class="lesson-subtitle">Phase 1: Fundamentals - Transform and Filter Your Data</p>
+  </div>
+
+  <div class="theory-section">
+    <h2>🎯 Learning Objectives</h2>
+    <ul class="objectives-list">
+      <li>Master the three essential operators: map, filter, and tap</li>
+      <li>Understand how to transform data streams with map</li>
+      <li>Learn to filter data streams with conditional logic</li>
+      <li>Use tap for debugging and side effects</li>
+      <li>Chain multiple operators together effectively</li>
+    </ul>
+  </div>
+
+  <div class="key-concepts">
+    <h2>🔑 Essential Operators</h2>
+    <div class="concept-grid">
+      <div class="concept-card map-card">
+        <h3>🗺️ map()</h3>
+        <p><strong>Purpose:</strong> Transform each emitted value</p>
+        <p><strong>Use case:</strong> Convert data types, calculate values, format strings</p>
+        <code>map(x =&gt; x * 2)</code>
+      </div>
+      <div class="concept-card filter-card">
+        <h3>🔍 filter()</h3>
+        <p><strong>Purpose:</strong> Only emit values that pass a test</p>
+        <p><strong>Use case:</strong> Remove unwanted data, conditional filtering</p>
+        <code>filter(x =&gt; x &gt; 10)</code>
+      </div>
+      <div class="concept-card tap-card">
+        <h3>👁️ tap()</h3>
+        <p><strong>Purpose:</strong> Perform side effects without changing values</p>
+        <p><strong>Use case:</strong> Logging, debugging, triggering actions</p>
+        <code>tap(x =&gt; console.log(x))</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="examples-section">
+    <h2>🚀 Interactive Examples</h2>
+    
+    <!-- Example 1: Map Operator -->
+    <div class="example-card">
+      <h3>Example 1: Map Operator - Transform Values</h3>
+      <p>The <code>map</code> operator transforms each value emitted by the source Observable.</p>
+      
+      <button class="example-button map-button" (click)="runMapExample()">
+        🗺️ Run Map Example
+      </button>
+      
+      <div class="output-section" *ngIf="mapOutput().length > 0">
+        <h4>🔢 Transformation Output:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of mapOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const numbers$ = of(1, 2, 3, 4, 5);
+
+const doubled$ = numbers$.pipe(
+  map(x =&gt; x * 2)  // Transform each number
+);
+
+doubled$.subscribe(value =&gt; console.log(value));
+// Output: 2, 4, 6, 8, 10</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 2: Filter Operator -->
+    <div class="example-card">
+      <h3>Example 2: Filter Operator - Select Values</h3>
+      <p>The <code>filter</code> operator only emits values that pass a predicate function.</p>
+      
+      <button class="example-button filter-button" (click)="runFilterExample()">
+        🔍 Run Filter Example
+      </button>
+      
+      <div class="output-section" *ngIf="filterOutput().length > 0">
+        <h4>✅ Filtered Output (&gt; 10):</h4>
+        <div class="output-list">
+          <div *ngFor="let output of filterOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const numbers$ = of(1, 5, 10, 15, 3, 20, 8, 25);
+
+const filtered$ = numbers$.pipe(
+  filter(x =&gt; x &gt; 10)  // Only numbers greater than 10
+);
+
+filtered$.subscribe(value =&gt; console.log(value));
+// Output: 15, 20, 25</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 3: Tap Operator -->
+    <div class="example-card">
+      <h3>Example 3: Tap Operator - Side Effects</h3>
+      <p>The <code>tap</code> operator performs side effects without modifying the stream.</p>
+      
+      <button class="example-button tap-button" (click)="runTapExample()">
+        👁️ Run Tap Example
+      </button>
+      
+      <div class="output-section" *ngIf="tapOutput().length > 0">
+        <h4>📝 Processing Steps:</h4>
+        <div class="output-list">
+          <div *ngFor="let output of tapOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const fruits$ = of('apple', 'banana', 'cherry');
+
+const processed$ = fruits$.pipe(
+  tap(fruit =&gt; console.log(`Processing: $&#123;fruit&#125;`)),
+  map(fruit =&gt; fruit.toUpperCase()),
+  tap(fruit =&gt; console.log(`Transformed: $&#123;fruit&#125;`))
+);
+
+processed$.subscribe(value =&gt; console.log(`Final: $&#123;value&#125;`));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 4: Chaining Operators -->
+    <div class="example-card">
+      <h3>Example 4: Chaining Multiple Operators</h3>
+      <p>Combine multiple operators to create powerful data transformation pipelines.</p>
+      
+      <button class="example-button chain-button" (click)="runChainedExample()">
+        🔗 Run Chained Example
+      </button>
+      
+      <div class="output-section" *ngIf="chainedOutput().length > 0">
+        <h4>🔄 Processing Pipeline:</h4>
+        <div class="output-list chained-output">
+          <div *ngFor="let output of chainedOutput()" class="output-item">
+            {{ output }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const numbers$ = of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+const processed$ = numbers$.pipe(
+  tap(x =&gt; console.log(`Original: $&#123;x&#125;`)),
+  filter(x =&gt; x % 2 === 0),        // Even numbers only
+  tap(x =&gt; console.log(`Even: $&#123;x&#125;`)),
+  map(x =&gt; x * x),                 // Square them
+  tap(x =&gt; console.log(`Squared: $&#123;x&#125;`)),
+  filter(x =&gt; x &gt; 10)              // Keep squares &gt; 10
+);
+
+processed$.subscribe(value =&gt; console.log(`Final: $&#123;value&#125;`));</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 5: Real-world Scenario -->
+    <div class="example-card">
+      <h3>Example 5: Real-world Scenario</h3>
+      <p>Process user data with filtering and transformation - a common real-world use case.</p>
+      
+      <button class="example-button real-world-button" (click)="runRealWorldExample()">
+        🌍 Run Real-world Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const users$ = from([
+  &#123; id: 1, name: 'Alice', age: 25, active: true &#125;,
+  &#123; id: 2, name: 'Bob', age: 17, active: false &#125;,
+  // ... more users
+]);
+
+const processedUsers$ = users$.pipe(
+  tap(user =&gt; console.log(`Processing: $&#123;user.name&#125;`)),
+  filter(user =&gt; user.active),     // Active users only
+  filter(user =&gt; user.age &gt;= 18),  // Adults only
+  map(user =&gt; (&#123;
+    displayName: `$&#123;user.name&#125; ($&#123;user.age&#125;)`,
+    category: user.age &gt;= 25 ? 'Senior' : 'Junior'
+  &#125;))
+);</code></pre>
+      </div>
+    </div>
+
+    <!-- Example 6: Debugging -->
+    <div class="example-card">
+      <h3>Example 6: Debugging with Tap</h3>
+      <p>Use <code>tap</code> to debug your Observable streams and understand data flow.</p>
+      
+      <button class="example-button debug-button" (click)="runDebuggingExample()">
+        🐛 Run Debugging Example
+      </button>
+      
+      <div class="code-example">
+        <h4>💻 Code:</h4>
+        <pre><code>const data$ = of(10, 20, 0, 30, -5, 40);
+
+const processed$ = data$.pipe(
+  tap(x =&gt; console.log(`🔍 Input: $&#123;x&#125;`)),
+  map(x =&gt; x === 0 ? 1 : x),       // Handle zero division
+  tap(x =&gt; console.log(`🔧 After zero check: $&#123;x&#125;`)),
+  filter(x =&gt; x &gt; 0),              // Positive numbers only
+  tap(x =&gt; console.log(`✅ After filter: $&#123;x&#125;`)),
+  map(x =&gt; 100 / x),               // Calculate percentage
+  tap(x =&gt; console.log(`🧮 Final: $&#123;x&#125;`))
+);</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="operator-comparison">
+    <h2>📊 Operator Comparison</h2>
+    <div class="comparison-table">
+      <div class="comparison-header">
+        <div>Operator</div>
+        <div>Purpose</div>
+        <div>Changes Stream</div>
+        <div>Common Use Cases</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name map-highlight">map</div>
+        <div>Transform values</div>
+        <div class="changes-yes">Yes</div>
+        <div>Data conversion, calculations, formatting</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name filter-highlight">filter</div>
+        <div>Select values</div>
+        <div class="changes-yes">Yes</div>
+        <div>Conditional filtering, data validation</div>
+      </div>
+      <div class="comparison-row">
+        <div class="operator-name tap-highlight">tap</div>
+        <div>Side effects</div>
+        <div class="changes-no">No</div>
+        <div>Logging, debugging, triggering actions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="best-practices">
+    <h2>✅ Best Practices</h2>
+    <div class="practice-list">
+      <div class="practice-item">
+        <h4>🎯 Pure Functions</h4>
+        <p>Keep your operator functions pure - no side effects in map or filter</p>
+      </div>
+      <div class="practice-item">
+        <h4>🔍 Use Tap for Debugging</h4>
+        <p>Use tap to inspect values at different stages of your pipeline</p>
+      </div>
+      <div class="practice-item">
+        <h4>⚡ Order Matters</h4>
+        <p>Place filter before map when possible to reduce unnecessary transformations</p>
+      </div>
+      <div class="practice-item">
+        <h4>📝 Readable Code</h4>
+        <p>Break complex pipelines into smaller, named functions for better readability</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <button class="clear-button" (click)="clearOutputs()">
+      🧹 Clear All Outputs
+    </button>
+  </div>
+
+  <div class="next-lesson">
+    <h3>🎯 Next Up: Creation Operators</h3>
+    <p>Now that you've mastered basic operators, let's learn about creation operators like <code>of</code>, <code>from</code>, <code>interval</code>, and more!</p>
+  </div>
+</div>
