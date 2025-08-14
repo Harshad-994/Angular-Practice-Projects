@@ -1,0 +1,22 @@
+<div class="book-list-container">
+  @if (isFetching() && !error()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading Books...</p>
+    </div>
+  } @if (error()) {
+    <div class="error-message">
+      <p>{{ error() }}</p>
+    </div>
+  } @if (!isFetching() && !error() && allBooks.length === 0) {
+    <div class="no-books">
+      <p>No books found. Try a different search.</p>
+    </div>
+  }
+
+  <div class="book-grid">
+    @for (book of allBooks; track $index) {
+      <app-book [book]="book"></app-book>
+    }
+  </div>
+</div>
