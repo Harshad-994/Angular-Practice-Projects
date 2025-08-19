@@ -1,0 +1,52 @@
+/* Tasks Display Styles */
+.task-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.task-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid #4a6cf7;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.task-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #2c3e50;
+  font-size: 1.25rem;
+}
+
+.task-card p {
+  margin: 8px 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+.task-card .description {
+  color: #6c757d;
+  font-style: italic;
+}
+
+.task-card .due-date {
+  color: #4a6cf7;
+  font-weight: 500;
+}
+
+a {
+  color: #4a6cf7;
+  text-decoration: none;
+  font-weight: 500;
+}
+a :hover {
+  color: #576dc7;
+}

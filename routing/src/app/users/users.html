@@ -1,0 +1,16 @@
+<h2>Users</h2>
+<ul>
+  @for (user of users; track user.userId) {
+  <li>
+    <a [routerLink]="['/tasks', user.userId]" routerLinkActive="active-user">
+      <p>{{ user.firstName + " " + user.lastName }}</p>
+    </a>
+  </li>
+  }
+</ul>
+
+@defer (on viewport) {
+<div>This is deffered view</div>
+} @placeholder {
+<p>This is a place holder</p>
+}

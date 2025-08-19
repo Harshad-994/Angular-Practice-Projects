@@ -1,0 +1,24 @@
+/* No Task Message Styles */
+.no-task-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 40px;
+}
+
+.no-task-message {
+  text-align: center;
+  padding: 30px 50px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px dashed #dee2e6;
+}
+
+.no-task-message p {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #6c757d;
+  font-weight: 500;
+}

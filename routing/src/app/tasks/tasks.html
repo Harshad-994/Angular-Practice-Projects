@@ -1,0 +1,16 @@
+<div class="task-container">
+  <a
+    routerLink="./"
+    [queryParams]="{ order: order() === 'asc' ? 'desc' : 'asc' }"
+    >Sort in {{ order() === "asc" ? "Descending" : "Ascending" }}</a
+  >
+  @for (task of userTasks(); track task.id) {
+  <div class="task-card">
+    <h3>{{ task.title }}</h3>
+    <p class="description">{{ task.description }}</p>
+    <p class="due-date">Due: {{ task.dueDate }}</p>
+  </div>
+  }
+</div>
+
+<router-outlet></router-outlet>

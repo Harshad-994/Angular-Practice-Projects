@@ -1,0 +1,45 @@
+/* Users List Styles */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 12px;
+}
+
+a {
+  display: block;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #495057;
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+a:hover {
+  background-color: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+a p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Active user link styling */
+.active-user {
+  background-color: #4a6cf7;
+  color: white;
+  border-color: #4a6cf7;
+}
+
+.active-user:hover {
+  background-color: #3a5ce5;
+  color: white;
+}
