@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { afterNextRender, Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
   constructor() {
-    const tasks = localStorage.getItem('tasks');
-    if (tasks) {
-      this.tasks = JSON.parse(tasks);
-    }
+    afterNextRender(() => {
+      const tasks = localStorage.getItem('tasks');
+      if (tasks) {
+        this.tasks = JSON.parse(tasks);
+      }
+    });
   }
 
   private tasks = [
