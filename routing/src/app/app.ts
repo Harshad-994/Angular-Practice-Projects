@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { UsersComponent } from './users/users';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',

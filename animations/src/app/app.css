@@ -1,0 +1,89 @@
+div.animation {
+  border: 1px solid #0c0c0c;
+  padding: 0.2rem;
+  margin-top: 1rem;
+  width: fit-content;
+  border-radius: 4px;
+}
+div.ball {
+  width: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  margin: 1rem;
+  transition: background-color 1.5s ease-in-out, transform 1.5s ease-in-out,
+    opacity 1.5s ease-in-out;
+  background-color: rgb(138, 75, 255);
+}
+.box {
+  margin: 0.5rem;
+  width: 300px;
+  height: 200px;
+  opacity: 1;
+  background-color: rgb(253, 124, 64);
+  transition: all 2s;
+}
+.items {
+  list-style: none;
+}
+.items .item {
+  font-weight: 500;
+  margin: 0.1rem;
+  font-size: 1.1rem;
+  transition-property: opacity, transform;
+  transition-duration: 500ms;
+  transition-delay: calc(var(--index) * 200ms);
+
+  @starting-style {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+}
+.box.closed {
+  height: 100px;
+  opacity: 0.8;
+  background-color: rgb(189, 52, 253);
+  transition: all 2s;
+}
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  @starting-style {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.bounce-out {
+  opacity: 0;
+  transform: translateY(40px);
+  /* transition: transform 1.5s ease-in-out, opacity 1.5s ease-in-out; */
+}
+.slide-in {
+  animation: slide-in 1.5s ease-in-out;
+  /* @starting-style {
+    background-color: rgb(75, 168, 255);
+  } */
+}
+.bounce-in {
+  animation: bounce-in 1.5s ease-in-out;
+  /* @starting-style {
+    transform: translateY(40px);
+  } */
+}
+@keyframes slide-in {
+  from {
+    background-color: rgb(75, 168, 255);
+  }
+}
+@keyframes bounce-in {
+  from {
+    transform: translateY(40px);
+  }
+}

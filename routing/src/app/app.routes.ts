@@ -2,12 +2,18 @@ import { Routes } from '@angular/router';
 import { userNameResolver } from './tasks/tasks';
 import { NoTaskComponent } from './no-task/no-task';
 import { NotFoundComponent } from './not-found/not-found';
+import { UsersComponent } from './users/users';
 
 export const routes: Routes = [
   {
     path: '',
     component: NoTaskComponent,
     title: 'No user selected',
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    title: 'User List',
   },
   {
     path: 'tasks/:userId',
