@@ -1,0 +1,18 @@
+<h1>Dynamic components!</h1>
+
+<button (click)="toggleShow()">click</button>
+
+<!-- @if (show()) {
+<ng-container *ngComponentOutlet="dynamicComp"> </ng-container>
+} -->
+
+<ng-template #projectedContent>
+  <p>this is projected content</p>
+  <p>
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque, laborum.
+  </p>
+</ng-template>
+
+@if (show()) {
+<ng-container #container> </ng-container>
+}
