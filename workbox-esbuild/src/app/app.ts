@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, isDevMode, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { IndexDbService } from './index-db';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class App {
   offlineMessage = signal('');
   isOnline = signal(true);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private idb: IndexDbService) {
     this.loadTodos();
     this.requestPushSubscription();
     this.setClientStatus();
@@ -29,11 +31,13 @@ export class App {
 
   onAdd() {
     if (!this.isOnline()) {
-      const pendingQueue: [string] = JSON.parse(
-        localStorage.getItem('queue') ?? '[]'
-      );
-      pendingQueue.push(this.task());
-      localStorage.setItem('queue', JSON.stringify(pendingQueue));
+      //queueing with localstorage
+      // const pendingQueue: [string] = JSON.parse(
+      //   localStorage.getItem('queue') ?? '[]'
+      // );
+      // pendingQueue.push(this.task());
+      // localStorage.setItem('queue', JSON.stringify(pendingQueue));
+      this.idb.addPendingTodo(this.task());
       this.task.set('');
       navigator.serviceWorker.ready.then((reg: any) => {
         if ('sync' in reg) {
@@ -102,6 +106,7 @@ export class App {
     window.addEventListener('online', () => {
       this.isOnline.set(true);
       this.offlineMessage.set('');
+      this.syncPendingTodos();
     });
 
     window.addEventListener('offline', () => {
@@ -110,5 +115,15 @@ export class App {
         'You are offline now! Serving from the catche or requests will be sync later on.'
       );
     });
+  }
+
+  async syncPendingTodos() {
+    const pending = await this.idb.getPendingTodos();
+    pending.map((obj) => this.todos.set([...this.todos(), obj.task]));
+    localStorage.setItem('todos', JSON.stringify(this.todos()));
+    await this.idb.clearPendingTodos();
+    console.log(await this.idb.getPendingTodos());
+
+    // this.loadTodos();
   }
 }
