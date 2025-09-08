@@ -1,0 +1,19 @@
+<h1>SW with Workbox with the ESbuild!</h1>
+<h1>My TO-DO App</h1>
+<input
+  type="text"
+  name="task"
+  id="taskInput"
+  placeholder="Enter a task"
+  [(ngModel)]="task"
+/>
+<button (click)="onAdd()">Add</button>
+<button (click)="onClear()">Clear</button>
+
+<ul>
+  @for (todo of todos(); track $index) {
+  <li>{{ todo }}</li>
+  }
+</ul>
+
+<p>{{ offlineMessage() }}</p>
