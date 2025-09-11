@@ -1,0 +1,32 @@
+<h2>NgRx Todo App</h2>
+
+<p>Add Todo</p>
+<form>
+  <input type="text" name="title" placeholder="Title" #title />
+  <br />
+  <input
+    type="text"
+    name="description"
+    placeholder="Description"
+    #description
+  />
+  <button (click)="onAddTodo(title.value, description.value)" type="button">
+    Add
+  </button>
+</form>
+
+<h3>Todos</h3>
+@if(error$ |async){
+<p>Error occured : {{ error$ }}</p>
+} @if(isLoading$ | async){
+<p>Loading...</p>
+}@else { @for (todo of todos$ |async; track $index) {
+<div>
+  <p [class.completed]="todo.isCompleted">Title : {{ todo.title }}</p>
+  <p [class.completed]="todo.isCompleted">
+    Description : {{ todo.description }}
+  </p>
+  <button (click)="onToggle(todo.id)">Toggle complete</button>
+  <button (click)="onRemove(todo.id)">Delete</button>
+</div>
+} }
